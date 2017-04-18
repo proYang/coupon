@@ -3,17 +3,23 @@ export default [
   {
     path: '/',
     name: '首页',
-    meta: {},
-    component: (resolve) => { require(['../views/index/index'], resolve) }
+    redirect: '/login'
   }, {
-    path: '/index',
-    name: '首页',
+    path: '/m',
+    component: resolve => require(['../components/Home.vue'], resolve),
+    name: '管理',
     meta: {},
-    component: (resolve) => { require(['../views/index/index'], resolve) }
+    children: [
+    ]
+  }, {
+    path: '/login',
+    name: '登录',
+    meta: {},
+    component: resolve => require(['../views/login/login'], resolve)
   }, {
     path: '*',
     name: '404',
     meta: {keepAlive: false},
-    compoment: (resolve) => { require(['../views/index/index'], resolve) }
+    compoment: resolve => { require(['../views/index/index'], resolve) }
   }
 ]
