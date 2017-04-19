@@ -6,10 +6,14 @@ export default [
     redirect: '/login'
   }, {
     path: '/m',
-    component: resolve => require(['../components/Home.vue'], resolve),
+    component: resolve => require(['../views/home/index'], resolve),
     name: '管理',
     meta: {},
     children: [
+      {
+        path: '/',
+        component: resolve => require(['../views/home/readme/index'], resolve)
+      }
     ]
   }, {
     path: '/login',
@@ -19,7 +23,7 @@ export default [
   }, {
     path: '*',
     name: '404',
-    meta: {keepAlive: false},
-    compoment: resolve => { require(['../views/index/index'], resolve) }
+    meta: { keepAlive: false },
+    compoment: resolve => { require(['../views/errorPage/404'], resolve) }
   }
 ]

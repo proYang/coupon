@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import vHead from './Header.vue'
-import vSidebar from './Sidebar.vue'
+import vHead from '../../components/header.vue'
+import vSidebar from '../../components/sideBar.vue'
 export default {
   components: {
     vHead, vSidebar
