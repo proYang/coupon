@@ -3,7 +3,8 @@ export default [
   {
     path: '/',
     name: '首页',
-    redirect: '/login'
+    meta: {},
+    component: resolve => require(['../views/index/index'], resolve)
   }, {
     path: '/m',
     component: resolve => require(['../views/home/index'], resolve),
