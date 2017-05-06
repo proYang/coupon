@@ -3,23 +3,15 @@
     <div class='crumbs'>
       <el-breadcrumb separator='/'>
         <el-breadcrumb-item><i class="el-icon-menu"></i>  我的优惠券</el-breadcrumb-item>
-        <el-breadcrumb-item>商户周边</el-breadcrumb-item>
+        <el-breadcrumb-item>更多维度</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class='plugins-tips'>数据展示</div>
-    <IEcharts class='echarts' :option='line'></IEcharts>
-    <IEcharts class='echarts' :option='bar'></IEcharts>
-    <IEcharts class='echarts' :option='pie'></IEcharts>
-    <IEcharts class='echarts' :option='pie_radius'></IEcharts>
   </div>
 </template>
 
 <script>
-import IEcharts from 'vue-echarts-v3'
 export default {
-  components: {
-    IEcharts
-  },
   data: () => ({
     line: {
       color: ['#20a0ff', '#13CE66', '#F7BA2A', '#FF4949'],

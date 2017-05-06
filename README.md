@@ -1,4 +1,4 @@
-# coupon
+# coupon 精惠投-O2O优惠券精准投放预测系统
 
 > A Vue.js project
 
