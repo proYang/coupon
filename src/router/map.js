@@ -12,8 +12,24 @@ export default [
     meta: {},
     children: [
       {
-        path: '/',
-        component: resolve => require(['../views/home/readme/index'], resolve)
+        path: '/setting',
+        component: resolve => require(['../views/home/setting/index'], resolve)
+      },
+      {
+        path: '/forecast',
+        component: resolve => require(['../views/home/forecast/index'], resolve)
+      },
+      {
+        path: '/mapChart',
+        component: resolve => require(['../views/home/coupon/mapChart/index'], resolve)
+      },
+      {
+        path: '/otherChart',
+        component: resolve => require(['../views/home/coupon/otherChart/index'], resolve)
+      },
+      {
+        path: '/upload',
+        component: resolve => require(['../views/home/upload/index'], resolve)
       }
     ]
   }, {

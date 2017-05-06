@@ -6,7 +6,7 @@ import router from './router'
 import globalConfig from './utils/globalConfig'
 import ElementUI from 'element-ui'
 import './assets/css/reset.css'
-import 'element-ui/lib/theme-default/index.css'    // 默认主题
+import 'element-ui/lib/theme-default/index.css'   // 默认主题
 
 Vue.use(globalConfig)
 Vue.use(ElementUI)

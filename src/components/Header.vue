@@ -1,11 +1,13 @@
 <template>
   <div class="header">
-    <div class="logo">后台管理系统</div>
+    <router-link :to="{ path: '/' }">
+    <div class="logo">精惠投商户系统</div>
+    </router-link>
     <div class="user-info">
       <el-dropdown trigger="click"
                    @command="handleCommand">
         <span class="el-dropdown-link">
-                          <img class="user-logo" src="../assets/logo.png">
+                          <img class="user-logo" src="../assets/img/logo_user.jpg">
                           {{username}}
                       </span>
         <el-dropdown-menu slot="dropdown">
@@ -47,12 +49,15 @@ export default {
   font-size: 22px;
   line-height: 70px;
   color: #fff;
+  background-color: #24292e;
 }
 
 .header .logo {
+  color: #fff;
   float: left;
   width: 250px;
   text-align: center;
+  cursor: pointer;
 }
 
 .user-info {
@@ -78,6 +83,7 @@ export default {
   width: 40px;
   height: 40px;
   border-radius: 50%;
+  background-color: #fff;
 }
 
 .el-dropdown-menu__item {
