@@ -25,21 +25,29 @@
       <div class="register-box">
         <div class="item">
           <span class="icon icon-company"></span>
-          <span class="input"><input type="text" value="" size="40" placeholder="公司名称"></span>
+          <span class="input"><input type="text" v-model="form.username" size="40" placeholder="公司名称"></span>
         </div>
         <div class="item">
           <span class="icon icon-name"></span>
-          <span class="input"><input type="text" value="" size="40" placeholder="姓名"></span>
+          <span class="input"><input type="text" v-model="form.nickname" value="" size="40" placeholder="姓名"></span>
         </div>
         <div class="item">
           <span class="icon icon-email"></span>
-          <span class="input"><input type="email" value="" size="40" placeholder="邮件"></span>
+          <span class="input"><input type="email" v-model="form.email" value="" size="40" placeholder="邮件"></span>
         </div>
         <div class="item">
           <span class="icon icon-phone"></span>
-          <span class="input"><input type="email" value="" size="40" placeholder="电话"></span>
+          <span class="input"><input type="tel" v-model="form.phone_number" value="" size="40" placeholder="电话"></span>
         </div>
-        <button class="submit">提交</button>
+        <div class="item">
+          <span class="icon icon-lock"></span>
+          <span class="input"><input type="password" v-model="form.password" value="" size="40" placeholder="密码"></span>
+        </div>
+        <div class="item">
+          <span class="icon icon-lock"></span>
+          <span class="input"><input type="password" v-model="form.password_confirm" value="" size="40" placeholder="确认密码"></span>
+        </div>
+        <button class="submit" v-on:click="register">提交</button>
       </div>
     </div>
   </div>
@@ -51,7 +59,14 @@
 export default {
   data: function () {
     return {
-
+      form: {
+        username: undefined,
+        nickname: undefined,
+        email: undefined,
+        phone_number: undefined,
+        password: undefined,
+        password_confirm: undefined
+      }
     }
   },
   methods: {
@@ -66,6 +81,64 @@ export default {
           clearInterval(timer)
         }
       }, 1000 / 60)
+    },
+    register() {
+      var that = this
+      var object = this.form
+      for (var key in object) {
+        if (!object[key]) {
+          this.$alert('您的信息不完整', '提示', {
+            confirmButtonText: '我知道了'
+          })
+          return
+        }
+      }
+      if (!/\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*/.test(this.form.email)) {
+        this.$alert('请输入正确的邮箱地址', '提示', {
+          confirmButtonText: '我知道了'
+        })
+        return
+      }
+      if (this.form.nickname.length < 5 || this.form.username < 5) {
+        this.$alert('用户名或公司名称必须大于五个字符', '提示', {
+          confirmButtonText: '我知道了'
+        })
+        return
+      }
+      if (this.form.password != this.form.password_confirm) {
+        this.$alert('两次密码不一致', '提示', {
+          confirmButtonText: '我知道了'
+        })
+        return
+      }
+      if (this.form.password.length < 8) {
+        this.$alert('您的密码太短啦', '提示', {
+          confirmButtonText: '我知道了'
+        })
+        return
+      }
+      var obj = Object.assign({}, this.form)
+      this.$api.register(obj).then(function (res) {
+        debugger
+        if (res.state == 200) {
+          that.$alert('注册成功，快去登录吧', '提示', {
+            confirmButtonText: '我知道了'
+          })
+          // 重置表单
+          that.resetForm()
+        } else {
+          that.$alert('系统错误，请重试', '提示', {
+            confirmButtonText: '我知道了'
+          })
+          return
+        }
+      })
+    },
+    resetForm() {
+      var object = this.form
+      for (var key in object) {
+        object[key] = ''
+      }
     }
   }
 }
@@ -185,12 +258,12 @@ export default {
   &-title {
     position: absolute;
     width: 100%;
-    top: 80px;
+    top: 90px;
     z-index: 1;
     >h3 {
       width: 100%;
-      margin: 60px 0 10px;
-      font-size: 36px;
+      margin: 40px 0 10px;
+      font-size: 30px;
       color: #fff;
       text-align: center;
     }
@@ -198,15 +271,15 @@ export default {
 
   .register-box {
     position: absolute;
-    top: 250px;
+    top: 180px;
     left: 0;
     right: 0;
     font-size: 14px;
     .item {
       position: relative;
       margin: 0 auto 18px;
-      width: 500px;
-      height: 50px;
+      width: 420px;
+      height: 45px;
       border-radius: 5px;
       background-color: #fff;
       .icon {
@@ -225,12 +298,16 @@ export default {
         &-name {
           background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAaCAMAAACXfxyGAAAAS1BMVEUAAAALUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUooLUopU7vOZAAAAGHRSTlMAQgz58tGzfVMTBYfqxZGB5T3cqnNsViELrGRmAAAAvUlEQVQoz4WR2w6DIBBEd1nQyk1tq87/f2mtBmsF9TyQISeZsAvtaJwRMW1DRR4aC/pRtEDFSnEFFHyjUa+phs77W1QpVnCZNuAUGSbTApWiglxrfV9+/7T7wcprybFOsCDO5t2tx4Y/fss4S1PzpNTEtQH8uO+NQOh/9z4A0W72BXnTH2/BK/kIzXSANWKaSHrK6GWdT3kMVGCAV8uSAhUJ3zXaDlzWjM7Ox5NOeIIpwp1ph0gBFwTqrnT3AcxPEKKf85e5AAAAAElFTkSuQmCC) center no-repeat
         }
+        &-lock {
+          background: url(data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBzdGFuZGFsb25lPSJubyI/PjwhRE9DVFlQRSBzdmcgUFVCTElDICItLy9XM0MvL0RURCBTVkcgMS4xLy9FTiIgImh0dHA6Ly93d3cudzMub3JnL0dyYXBoaWNzL1NWRy8xLjEvRFREL3N2ZzExLmR0ZCI+PHN2ZyB0PSIxNDk0MTM2ODYwODg5IiBjbGFzcz0iaWNvbiIgc3R5bGU9IiIgdmlld0JveD0iMCAwIDEwMjQgMTAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHAtaWQ9IjEyNTIiIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iMjAwIiBoZWlnaHQ9IjIwMCI+PGRlZnM+PHN0eWxlIHR5cGU9InRleHQvY3NzIj48L3N0eWxlPjwvZGVmcz48cGF0aCBkPSJNNzQyLjQgNDA5LjZsLTI1LjYgMCAwLTc2LjhjMC0xMjcuMDI3Mi0xMDMuMzcyOC0yMzAuNC0yMzAuNC0yMzAuNHMtMjMwLjQgMTAzLjM3MjgtMjMwLjQgMjMwLjRsMCA3Ni44LTI1LjYgMGMtNDIuMzQyNCAwLTc2LjggMzQuNDU3Ni03Ni44IDc2LjhsMCA0MDkuNmMwIDQyLjM0MjQgMzQuNDU3NiA3Ni44IDc2LjggNzYuOGw1MTIgMGM0Mi4zNDI0IDAgNzYuOC0zNC40NTc2IDc2LjgtNzYuOGwwLTQwOS42YzAtNDIuMzQyNC0zNC40NTc2LTc2LjgtNzYuOC03Ni44ek0zMDcuMiAzMzIuOGMwLTk4LjgxNiA4MC4zODQtMTc5LjIgMTc5LjItMTc5LjJzMTc5LjIgODAuMzg0IDE3OS4yIDE3OS4ybDAgNzYuOC0zNTguNCAwIDAtNzYuOHpNNzY4IDg5NmMwIDE0LjEzMTItMTEuNDY4OCAyNS42LTI1LjYgMjUuNmwtNTEyIDBjLTE0LjEzMTIgMC0yNS42LTExLjQ2ODgtMjUuNi0yNS42bDAtNDA5LjZjMC0xNC4xMzEyIDExLjQ2ODgtMjUuNiAyNS42LTI1LjZsNTEyIDBjMTQuMTMxMiAwIDI1LjYgMTEuNDY4OCAyNS42IDI1LjZsMCA0MDkuNnoiIHAtaWQ9IjEyNTMiIGZpbGw9IiMwYjUyOGEiPjwvcGF0aD48L3N2Zz4=) center no-repeat;
+          background-size: 35px;
+        }
       }
       .input {
         >input {
           position: relative;
           float: left;
-          width: 425px;
+          width: 345px;
           height: 100%;
           border: 0;
           outline: 0;
@@ -239,15 +316,15 @@ export default {
       }
     }
     .submit {
-      margin: 30px auto;
+      margin: 20px auto;
       display: inherit;
       border-style: none;
       transition: all .4s;
       font-size: 16px;
       text-align: center;
-      line-height: 50px;
-      width: 150px;
-      height: 50px;
+      line-height: 45px;
+      width: 135px;
+      height: 45px;
       border-radius: 10px;
       color: #fff;
       background-color: #f45b69;

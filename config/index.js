@@ -28,12 +28,11 @@ module.exports = {
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-      '/xique1': {
-          target: 'https://www.xiqueshequ.net',// 线上环境
-          // target: 'http://139.129.240.33:8080/',// 开发环境
+      '/jinghuitou': {
+          target: 'http://www.jinghuitou.com',// 线上环境
           changeOrigin: true,
           pathRewrite: {
-            '^/xique1': '/xique1'
+            '^/jinghuitou': '/jinghuitou'
           }
         }
     },

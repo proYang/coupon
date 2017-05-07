@@ -16,6 +16,10 @@ export default [
         component: resolve => require(['../views/home/setting/index'], resolve)
       },
       {
+        path: '/changePassword',
+        component: resolve => require(['../views/home/setting/password/index'], resolve)
+      },
+      {
         path: '/forecast',
         component: resolve => require(['../views/home/forecast/index'], resolve)
       },

@@ -21,9 +21,6 @@ export default {
   created() {
   },
   mounted() {
-    api.getHotColleges().then((data) => {
-      console.log(data)
-    })
   },
   destroyed() {
   },

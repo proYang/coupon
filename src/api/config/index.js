@@ -6,7 +6,7 @@
 import Axios from 'axios'
 import QS from 'querystring'
 
-Axios.defaults.baseURL = '/xique1/'
+Axios.defaults.baseURL = '/'
 
 // TODO 设置超时时间
 Axios.defaults.timeout = 10000
@@ -41,7 +41,7 @@ Axios.defaults.transformRequest = [function (body) {
     return body
   }
 
-  return QS.stringify(data)
+  return JSON.stringify(data)
 }]
 
 /**
