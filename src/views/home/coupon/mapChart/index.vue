@@ -6,7 +6,6 @@
         <el-breadcrumb-item>商户周边</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class='plugins-tips'>数据展示</div>
     <div id="J_echarts-map" class='mix-echarts'></div>
   </div>
 </template>

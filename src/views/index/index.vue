@@ -119,7 +119,6 @@ export default {
       }
       var obj = Object.assign({}, this.form)
       this.$api.register(obj).then(function (res) {
-        debugger
         if (res.state == 200) {
           that.$alert('注册成功，快去登录吧', '提示', {
             confirmButtonText: '我知道了'

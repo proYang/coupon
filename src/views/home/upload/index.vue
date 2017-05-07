@@ -5,10 +5,8 @@
         <el-breadcrumb-item><i class="el-icon-upload"></i>  数据导入</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="content-title">请导入您的消费记录</div>
+    <div class="content-title">请上传您的账单记录</div>
     <div class="plugins-tips">
-      Element UI自带上传组件。 访问地址：
-      <a href="http://element.eleme.io/#/zh-CN/component/upload" target="_blank">Element UI Upload</a>
     </div>
     <el-upload action="/api/posts/" type="drag" :on-remove="handleRemove" :on-error="handleError" :default-file-list="fileList">
       <i class="el-icon-upload"></i>

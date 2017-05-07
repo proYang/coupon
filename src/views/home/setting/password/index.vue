@@ -8,13 +8,13 @@
     <div class="form-box">
       <el-form ref="form" :model="form" label-width="80px">
         <el-form-item label="原密码">
-          <el-input v-model="form.prepassword" placeholder="请输入原密码"></el-input>
+          <el-input v-model="form.prepassword" type='password' placeholder="请输入原密码"></el-input>
         </el-form-item>
         <el-form-item label="新密码">
-          <el-input v-model="form.password" placeholder="请输入新密码"></el-input>
+          <el-input v-model="form.password" type='password' placeholder="请输入新密码"></el-input>
         </el-form-item>
         <el-form-item label="确认密码">
-          <el-input v-model="form.password_confirm" placeholder="请再次输入新密码"></el-input>
+          <el-input v-model="form.password_confirm" type='password' placeholder="请再次输入新密码"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="onSubmit">修改</el-button>
@@ -66,6 +66,13 @@ export default {
           that.$message.success('修改成功！')
           // 重置表单
           that.resetForm()
+        } else if (res.state == 403) {
+          that.$alert('您的密码有误，请重试', '提示', {
+            confirmButtonText: '我知道了'
+          })
+          // 重置表单
+          that.resetForm()
+          return
         } else {
           that.$alert('系统错误，请重试', '提示', {
             confirmButtonText: '我知道了'

@@ -27,7 +27,8 @@ export default {
   },
   computed: {
     username() {
-      let username = localStorage.getItem('ms_username')
+      // let username = localStorage.getItem('ms_username')
+      let username = '沁园重邮店'
       return username ? username : this.name
     }
   },
