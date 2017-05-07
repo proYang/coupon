@@ -1,15 +1,14 @@
 <template>
   <div class="header">
     <router-link :to="{ path: '/' }">
-    <div class="logo">精惠投商户系统</div>
+      <div class="logo">精惠投商户系统</div>
     </router-link>
     <div class="user-info">
-      <el-dropdown trigger="click"
-                   @command="handleCommand">
+      <el-dropdown trigger="click" @command="handleCommand">
         <span class="el-dropdown-link">
-                          <img class="user-logo" src="../assets/img/logo_user.jpg">
-                          {{username}}
-                      </span>
+                                    <img class="user-logo" src="../assets/img/logo_user.jpg">
+                                    {{username}}
+                                </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="changePassword">修改密码</el-dropdown-item>
           <el-dropdown-item command="loginout">退出</el-dropdown-item>
@@ -32,14 +31,34 @@ export default {
       return username ? username : this.name
     }
   },
+  mounted() {
+    // 判断是否登录
+    this.judgeLogin()
+  },
   methods: {
     handleCommand(command) {
+      var that = this
       if (command == 'loginout') {
+        // 登出
         localStorage.removeItem('ms_username')
-        this.$router.push('/login')
+        this.$api.logout().then(function (res) {
+          that.$router.push('/')
+        })
       } else if (command == 'changePassword') {
         this.$router.push('/changePassword')
       }
+    },
+    judgeLogin() {
+      var that = this
+      this.$api.getInfo().then(function (res) {
+        if (res.state == 233) {
+          // 未登录
+          that.$router.push('/login')
+        }
+      }, function (rej) {
+        // 未登录
+        that.$router.push('/login')
+      })
     }
   }
 }

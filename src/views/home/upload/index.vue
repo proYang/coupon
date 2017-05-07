@@ -5,7 +5,7 @@
         <el-breadcrumb-item><i class="el-icon-upload"></i>  数据导入</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class="content-title">请上传您的账单记录</div>
+    <div class="content-title">请导入您的流水记录</div>
     <div class="plugins-tips">
     </div>
     <el-upload action="/api/posts/" type="drag" :on-remove="handleRemove" :on-error="handleError" :default-file-list="fileList">
@@ -37,7 +37,7 @@ export default {
     handleError() {
       this.$notify.error({
         title: '上传失败',
-        message: '图片上传接口上传失败，可更改为自己的服务器接口'
+        message: '文件上传失败，请稍后再试'
       })
     }
   }
