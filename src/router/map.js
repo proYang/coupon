@@ -44,7 +44,6 @@ export default [
   }, {
     path: '*',
     name: '404',
-    meta: { keepAlive: false },
-    compoment: resolve => { require(['../views/errorPage/404'], resolve) }
+    compoment: resolve => require(['../views/errorPage/404.vue'], resolve)
   }
 ]

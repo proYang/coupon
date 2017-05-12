@@ -27,15 +27,15 @@
         </el-form-item>
         <el-form-item label="商户地址">
           <el-select v-model="provinceCode" @change="getRegion('city')" placeholder="请选择所在省">
-            <el-option v-for="item in province" :label="item.name" :value="item.cityCode">
+            <el-option v-for="item in province" :key="item.cityCode" :label="item.name" :value="item.cityCode">
             </el-option>
           </el-select>
           <el-select v-model="cityCode" @change="getRegion('county')" placeholder="请选择所在市">
-            <el-option v-for="item in city" :label="item.name" :value="item.cityCode">
+            <el-option v-for="item in city" :key="item.cityCode" :label="item.name" :value="item.cityCode">
             </el-option>
           </el-select>
           <el-select style="margin-top: 20px;" v-model="countyCode" placeholder="请选择所在县">
-            <el-option v-for="item in county" :label="item.name" :value="item.cityCode">
+            <el-option v-for="item in county" :key="item.cityCode" :label="item.name" :value="item.cityCode">
             </el-option>
           </el-select>
           <el-input style="margin-top: 20px;" type='textarea' v-model="form.address" placeholder="请输入详细地址"></el-input>
