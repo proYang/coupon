@@ -29,7 +29,8 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/jinghuitou': {
-          target: 'http://115.159.161.73/',// 线上环境
+          // target: 'http://115.159.161.73/',// 线上环境
+          target: 'http://www.jinghuitou.com/',// 线上环境
           changeOrigin: true,
           pathRewrite: {
             '^/jinghuitou': '/jinghuitou'
