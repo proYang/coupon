@@ -58,7 +58,7 @@ export default {
               // 登陆成功
               that.resetForm()
               localStorage.setItem('ms_user', that.ruleForm.user)
-              that.$router.push('/setting')
+              that.$router.push('/state')
             } else {
               that.$alert('用户名不存在或密码错误', '提示', {
                 confirmButtonText: '我知道了'

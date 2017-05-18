@@ -12,6 +12,13 @@ export default [
     meta: {},
     children: [
       {
+        path: '/state',
+        component: resolve => require(['../views/home/state/index'], resolve)
+      }, {
+        path: '/dispatch',
+        component: resolve => require(['../views/home/dispatch/index'], resolve)
+      },
+      {
         path: '/setting',
         component: resolve => require(['../views/home/setting/index'], resolve)
       },
