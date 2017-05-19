@@ -3,7 +3,7 @@
     <div class="plugins-tips">投放方案预测</div>
     <div>
       <span class="el-breadcrumb__item__inner">您当前用户总数
-        <span style="font-weight:700">{{totalNum}}人</span>
+        <span style="font-weight:700">{{buyerNum}}人</span>
       </span>
     </div>
     <div class="table-item" v-for="item in stamps">
@@ -39,7 +39,7 @@
       <el-button @click='push' type="primary">投放</el-button>
     </div>
     <div class="block">
-      <el-pagination layout="prev, pager, next" :total="totalNum" :page-size='params.size' :current-page='params.page' @current-change='changePage'>
+      <el-pagination layout="prev, pager, next" :page-count='totalPage' :page-size='params.size' :current-page='params.page' @current-change='changePage'>
       </el-pagination>
     </div>
   </div>
@@ -55,8 +55,9 @@ export default {
         size: 6,
         page: 1
       },
-      totalNum: 100,
-      stamps: []
+      buyerNum: 100, // 用户总数
+      stamps: [],
+      totalPage: 1
     }
   },
   mounted() {
@@ -76,6 +77,8 @@ export default {
       let params = this.params
       this.$api.getCouponList(params).then(function (res) {
         that.stamps = res.data
+        that.buyerNum = res.buyerNum
+        that.totalPage = res.totalPage
       })
     },
     getShopId() {
