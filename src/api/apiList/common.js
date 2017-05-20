@@ -78,6 +78,16 @@ export const uploadRecords = (body) => {
   return api.post('/jinghuitou/public/index.php/shop/importRecords', body)
 }
 
+// 优惠券按距离分析
+export const couponNumByDistance = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/couponNumByDistance', body)
+}
+
+// 优惠券使用情况
+export const couponNumByUseful = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/couponNumByUseful', body)
+}
+
 // 优惠券推荐
 export const getCouponList = (body) => {
   return api.post('/jinghuitou/public/index.php/shop/couponStatus', body)

@@ -2,8 +2,9 @@
   <div>
     <div class='crumbs'>
       <el-breadcrumb separator='/'>
-        <el-breadcrumb-item><i class="el-icon-menu"></i> 我的优惠券</el-breadcrumb-item>
-        <el-breadcrumb-item>商户周边</el-breadcrumb-item>
+        <el-breadcrumb-item>
+          <i class="el-icon-menu"></i> 我的优惠券</el-breadcrumb-item>
+        <el-breadcrumb-item>周边顾客分析图</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div id="J_echarts-map" class='mix-echarts'></div>
@@ -14,6 +15,7 @@
 import echarts from 'echarts'
 import 'echarts/dist/extension/bmap.min.js'
 import data from '../../../../../static/data.json'
+const $window = window
 export default {
   data: function () {
     return {
@@ -102,37 +104,37 @@ export default {
             type: 'scatter',
             coordinateSystem: 'bmap',
             data: [{
-              name: 'cy001',
+              name: '刘**',
               value: [106.611220, 29.534500, 1]
             }, {
-              name: 'cy001',
+              name: '张**',
               value: [106.614520, 29.536600, 1]
             }, {
-              name: 'cy001',
+              name: '淡淡**',
               value: [106.613420, 29.531200, 1]
             }, {
-              name: 'cy001',
+              name: '欧阳**',
               value: [106.613420, 29.533600, 1]
             }, {
-              name: 'cy001',
+              name: '张**',
               value: [106.615420, 29.539800, 1]
             }, {
-              name: 'cy001',
+              name: '深深**',
               value: [106.612220, 29.539900, 1]
             }, {
-              name: 'cy001',
+              name: '浅谈**',
               value: [106.611120, 29.537600, 1]
             }, {
-              name: 'cy001',
+              name: '黄**',
               value: [106.619620, 29.538700, 1]
             }, {
-              name: 'cy001',
+              name: '王**',
               value: [106.613820, 29.539800, 1]
             }, {
-              name: 'cy001',
+              name: '沙**',
               value: [106.615820, 29.534500, 1]
             }, {
-              name: 'cy001',
+              name: '白**',
               value: [106.613220, 29.56500, 1]
             }],
             showEffectOn: 'render',
@@ -209,7 +211,23 @@ export default {
           }
         ]
       })
+    },
+    getMapData() {
+      // 获取数据
+      // let shopInfo = JSON.parse($window.localStorage.getItem('shop_info'))
+      // let params = {
+      //   shop_id: shopInfo.id,
+      //   spacing: 3,
+      //   num: 100,
+      //   time: 'year'
+      // }
+      // this.$api.getMapData(params).then(function (res) {
+      //   debugger
+      // })
     }
+  },
+  created() {
+    this.getMapData()
   },
   mounted() {
     this.$nextTick(function () {

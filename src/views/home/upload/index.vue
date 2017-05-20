@@ -51,7 +51,7 @@ export default {
     handleError() {
       this.$notify.error({
         title: '上传失败',
-        message: '文件上传失败，请检查您的文件类型'
+        message: '文件上传失败，请检查您的文件格式'
       })
     },
     getShopId() {

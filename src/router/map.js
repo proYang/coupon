@@ -28,8 +28,12 @@ export default [
         component: resolve => require(['../views/home/coupon/mapChart/index'], resolve)
       },
       {
-        path: '/otherChart',
-        component: resolve => require(['../views/home/coupon/otherChart/index'], resolve)
+        path: '/lineChart',
+        component: resolve => require(['../views/home/coupon/lineChart/index'], resolve)
+      },
+      {
+        path: '/spreadChart',
+        component: resolve => require(['../views/home/coupon/spreadChart/index'], resolve)
       },
       {
         path: '/upload',
