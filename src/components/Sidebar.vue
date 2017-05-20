@@ -11,7 +11,7 @@
         <template slot="title">
           <i class="el-icon-menu"></i>我的优惠券</template>
         <el-menu-item index="mapChart">周边顾客分析</el-menu-item>
-        <el-menu-item index="lineChart">顾客距离分析</el-menu-item>
+        <el-menu-item index="lineChart">优惠券领取距离分析</el-menu-item>
         <el-menu-item index="spreadChart">优惠券领取和使用状况</el-menu-item>
       </el-submenu>
       <el-menu-item index="forecast">

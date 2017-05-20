@@ -14,7 +14,7 @@
         </a>
       </div>
     </div>
-    <el-upload action="/jinghuitou/public/index.php/shop/importRecords" :data='params' name="records" type="drag" :on-remove="handleRemove" :on-error="handleError" :default-file-list="fileList">
+    <el-upload action="/jinghuitou/public/index.php/shop/importRecords" :data='params' name="records" type="drag" :on-remove="handleRemove" :on-success="handleSuccess" :on-error="handleError" :default-file-list="fileList">
       <i class="el-icon-upload"></i>
       <div class="el-dragger__text">将文件拖到此处，或
         <em>点击上传</em>
@@ -47,6 +47,13 @@ export default {
     },
     handlePreview(file) {
       console.log(file)
+    },
+    handleSuccess(response, file, fileList) {
+      this.$notify.success({
+        title: '上传成功',
+        message: '文件上传成功，预计两个小时后数据分析完成，请耐心等待',
+        duration: 0
+      })
     },
     handleError() {
       this.$notify.error({

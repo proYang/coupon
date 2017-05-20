@@ -4,10 +4,14 @@
       <el-breadcrumb separator='/'>
         <el-breadcrumb-item>
           <i class="el-icon-menu"></i> 我的优惠券</el-breadcrumb-item>
-        <el-breadcrumb-item>更多维度</el-breadcrumb-item>
+        <el-breadcrumb-item>优惠券领取和使用状况</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
-    <div class='plugins-tips'>我的优惠券状态</div>
+    <div class="block">
+      <span class="demonstration">数据所在时间段：</span>
+      <el-date-picker v-model="times" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择所需数据的时间范围" align="left">
+      </el-date-picker>
+    </div>
     <div id="J_echarts-bar" class="echarts"></div>
     <div id="J_echarts-pie" class="echarts"></div>
   </div>
@@ -22,13 +26,14 @@ export default {
       bar: {
         color: ['#20a0ff', '#13CE66', '#F7BA2A', '#FF4949'],
         title: {
-          text: '柱状图'
+          text: '优惠券领取和使用状况对比图（一）'
         },
         tooltip: {
           trigger: 'axis',
           axisPointer: {            // 坐标轴指示器，坐标轴触发有效
             type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
-          }
+          },
+          formatter: '{b0}: {c0}人<br />'
         },
         grid: {
           left: '3%',
@@ -42,7 +47,14 @@ export default {
             alignWithLabel: true
           }
         },
-        yAxis: {},
+        yAxis: {
+          name: '人数/个',
+          nameGap: 10,
+          type: 'value',
+          axisLabel: {
+            formatter: '{value} 人'
+          }
+        },
         series: [
           {
             name: '人数',
@@ -54,12 +66,12 @@ export default {
       },
       pie: {
         title: {
-          text: '饼状图'
+          text: '优惠券领取和使用状况对比图（二）'
         },
         color: ['#13CE66', '#F7BA2A', '#FF4949', '#61a0a8', '#20a0ff'],
         tooltip: {
           trigger: 'item',
-          formatter: '{a} <br/>{b}: {c} ({d}%)'
+          formatter: '{a} <br/>{b}: {c}人 ({d}%)'
         },
         legend: {
           orient: 'vertical',
@@ -103,7 +115,50 @@ export default {
             ]
           }
         ]
-      }
+      },
+      pickerOtherOption: {
+        editable: false,
+        clearable: false
+      },
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近一年',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365)
+            picker.$emit('pick', [start, end])
+          }
+        }],
+        disabledDate(time) {
+          return time.getTime() > Date.now()
+        }
+      },
+      times: [new Date().getTime() - 3600 * 1000 * 24 * 500, new Date()]
     }
   },
   methods: {
@@ -113,8 +168,8 @@ export default {
       let shopInfo = JSON.parse($window.localStorage.getItem('shop_info'))
       let params = {
         shop_id: shopInfo.id,
-        time_level: 'year',
-        time: 2
+        start: new Date(that.times[0]).getTime(),
+        end: new Date(that.times[1]).getTime()
       }
       this.$api.couponNumByUseful(params).then(function (res) {
         // 0-已领券  1-未领取 2-已使用 3-未使用
@@ -139,6 +194,12 @@ export default {
     drawpie() {
       var chart = echarts.init(document.querySelector('#J_echarts-pie'))
       chart.setOption(this.pie, true)
+    },
+    pickTime(val) {
+      let times = this.times
+      if (times[0] === null || times[1] === null) return
+      // 重新获取数据
+      this.fetchData()
     }
   },
   created() {
@@ -147,11 +208,22 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang='less' scoped>
 .echarts {
   margin-top: 20px;
   float: left;
   width: 500px;
   height: 400px;
+}
+
+.crumbs {
+  float: left;
+}
+
+.block {
+  float: left;
+  position: relative;
+  top: -12px;
+  left: 50px;
 }
 </style>
