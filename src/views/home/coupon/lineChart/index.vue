@@ -18,10 +18,13 @@
 
 <script>
 import echarts from 'echarts'
+import { Loading } from 'element-ui'
 const $window = window
 export default {
   data: function () {
     return {
+      chat: null,
+      loadingInstance: undefined,
       line: {
         title: {
           text: '优惠券领取距离分析图'
@@ -173,6 +176,8 @@ export default {
         end: new Date(that.times[1]).getTime()
       }
       that.$api.couponNumByDistance(params).then(function (res) {
+        // 关闭loading
+        that.loadingInstance.close()
         res.data.forEach(function (item) {
           let index = --item.distance
           if (index >= 10) return
@@ -185,13 +190,20 @@ export default {
         that.drawline()
       })
     },
+    initChat() {
+      this.chart = echarts.init(document.querySelector('#J_echarts-line'))
+    },
     drawline() {
-      var chart = echarts.init(document.querySelector('#J_echarts-line'))
-      chart.setOption(this.line, true)
+      this.chart.setOption(this.line, true)
     },
     pickTime(val) {
       let times = this.times
       if (times[0] === null || times[1] === null) return
+      this.loadingInstance = Loading.service({
+        target: '#J_echarts-line',
+        body: 'loading',
+        text: '数据获取中'
+      })
       // 清除已有数据
       this.clearOldData()
       // 重新获取数据
@@ -203,10 +215,18 @@ export default {
       series[1].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
   },
-  created() {
+  mounted() {
+    this.loadingInstance = Loading.service({
+      target: '#J_echarts-line',
+      body: 'loading',
+      text: '数据获取中'
+    })
+    this.initChat()
     this.fetchData()
   },
-  mounted() {
+  destroyed() {
+    // 关闭loading
+    this.loadingInstance.close()
   }
 }
 </script>

@@ -12,17 +12,21 @@
       <el-date-picker v-model="times" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择所需数据的时间范围" align="left">
       </el-date-picker>
     </div>
-    <div id="J_echarts-bar" class="echarts"></div>
-    <div id="J_echarts-pie" class="echarts"></div>
+    <div class="echarts-container">
+      <div id="J_echarts-bar" class="echarts"></div>
+      <div id="J_echarts-pie" class="echarts"></div>
+    </div>
   </div>
 </template>
 
 <script>
 import echarts from 'echarts'
+import { Loading } from 'element-ui'
 const $window = window
 export default {
   data: function () {
     return {
+      loadingInstance: undefined,
       bar: {
         color: ['#20a0ff', '#13CE66', '#F7BA2A', '#FF4949'],
         title: {
@@ -172,6 +176,8 @@ export default {
         end: new Date(that.times[1]).getTime()
       }
       this.$api.couponNumByUseful(params).then(function (res) {
+        // 关闭loading
+        that.loadingInstance.close()
         // 0-已领券  1-未领取 2-已使用 3-未使用
         that.bar.series[0].data[0] = res.data.spendWithCoupon
         that.bar.series[0].data[1] = res.data.spendWithoutCoupon
@@ -199,11 +205,25 @@ export default {
       let times = this.times
       if (times[0] === null || times[1] === null) return
       // 重新获取数据
+      this.loadingInstance = Loading.service({
+        target: '.echarts-container',
+        body: 'loading',
+        text: '数据获取中'
+      })
       this.fetchData()
     }
   },
-  created() {
+  mounted() {
+    this.loadingInstance = Loading.service({
+      target: '.echarts-container',
+      body: 'loading',
+      text: '数据获取中'
+    })
     this.fetchData()
+  },
+  destroyed() {
+    // 关闭loading
+    this.loadingInstance.close()
   }
 }
 </script>
@@ -225,5 +245,12 @@ export default {
   position: relative;
   top: -12px;
   left: 50px;
+}
+
+.echarts-container {
+  position: absolute;
+  left: 30px;
+  top: 60px;
+  overflow: hidden;
 }
 </style>
