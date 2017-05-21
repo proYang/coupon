@@ -14,14 +14,18 @@
         </div>
         <el-button class="back" v-on:click="back" icon="arrow-left" size="mini">返回</el-button>
       </el-form>
+      <div class="message" v-if="isShow">您当前浏览器版本过低，为了不影响使用，建议
+        <a target="_blank" href="http://rj.baidu.com/soft/detail/14744.html">升级浏览器</a>
+      </div>
     </div>
+  
   </div>
 </template>
 
 <script>
 export default {
   data: function () {
-    var checkAge = (rule, value, callback) => {
+    let checkAge = (rule, value, callback) => {
       if (!value) {
         return callback(new Error('邮箱不能为空'))
       }
@@ -34,6 +38,7 @@ export default {
       }, 300)
     }
     return {
+      isShow: false,
       ruleForm: {
         user: '', // user
         password: ''
@@ -76,16 +81,46 @@ export default {
       this.$router.back()
     },
     resetForm() {
-      var object = this.ruleForm
-      for (var key in object) {
+      let object = this.ruleForm
+      for (let key in object) {
         object[key] = ''
       }
+    },
+    uaParse() {
+      let ie = IEMode()
+      if (ie && ie <= 11) {
+        // 你的浏览器太老了。IE11以下
+        this.isShow = true
+      }
+      function IEMode() {
+        let ua = navigator.userAgent.toLowerCase()
+        let reTrident = /\btrident\/([0-9.]+)/
+        let reMsie = /\b(?:msie |ie |trident\/[0-9].*rv[ :])([0-9.]+)/
+        let version
+
+        if (!reMsie.test(ua)) { return false }
+
+        let m = reTrident.exec(ua)
+        if (m) {
+          version = m[1].split('.')
+          version[0] = parseInt(version[0], 10) + 4
+          version = version.join('.')
+        } else {
+          m = reMsie.exec(ua)
+          version = m[1]
+        }
+        return parseFloat(version)
+      }
     }
+  },
+  created() {
+    // 浏览器版本解析
+    this.uaParse()
   }
 }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 .login-wrap {
   position: relative;
   width: 100%;
@@ -126,5 +161,21 @@ export default {
 
 .back {
   margin-top: 13px;
+}
+
+.message {
+  position: absolute;
+  left: 50%;
+  margin-top: 50px;
+  margin-left: -250px;
+  width: 500px;
+  height: 100px;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  >a {
+    color: #20A0FF;
+    font-size: 16px;
+  }
 }
 </style>
