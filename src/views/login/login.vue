@@ -88,8 +88,8 @@ export default {
     },
     uaParse() {
       let ie = IEMode()
-      if (ie && ie <= 11) {
-        // 你的浏览器太老了。IE11以下
+      if (ie && ie < 10) {
+        // 你的浏览器太老了。IE10以下
         this.isShow = true
       }
       function IEMode() {
@@ -143,7 +143,7 @@ export default {
   left: 50%;
   top: 50%;
   width: 300px;
-  height: 160px;
+  min-height: 160px;
   margin: -150px 0 0 -190px;
   padding: 40px;
   border-radius: 5px;

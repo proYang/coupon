@@ -25,27 +25,39 @@
       <div class="register-box">
         <div class="item">
           <span class="icon icon-company"></span>
-          <span class="input"><input type="text" v-model="form.username" size="40" placeholder="公司名称"></span>
+          <span class="input">
+            <input type="text" v-model="form.username" size="40" placeholder="公司名称">
+          </span>
         </div>
         <div class="item">
           <span class="icon icon-name"></span>
-          <span class="input"><input type="text" v-model="form.nickname" value="" size="40" placeholder="姓名"></span>
+          <span class="input">
+            <input type="text" v-model="form.nickname" value="" size="40" placeholder="姓名">
+          </span>
         </div>
         <div class="item">
           <span class="icon icon-email"></span>
-          <span class="input"><input type="email" v-model="form.email" value="" size="40" placeholder="邮件"></span>
+          <span class="input">
+            <input type="email" v-model="form.email" value="" size="40" placeholder="邮件">
+          </span>
         </div>
         <div class="item">
           <span class="icon icon-phone"></span>
-          <span class="input"><input type="tel" v-model="form.phone_number" value="" size="40" placeholder="电话"></span>
+          <span class="input">
+            <input type="tel" v-model="form.phone_number" value="" size="40" placeholder="电话">
+          </span>
         </div>
         <div class="item">
           <span class="icon icon-lock"></span>
-          <span class="input"><input type="password" v-model="form.password" value="" size="40" placeholder="密码"></span>
+          <span class="input">
+            <input type="password" v-model="form.password" value="" size="40" placeholder="密码">
+          </span>
         </div>
         <div class="item">
           <span class="icon icon-lock"></span>
-          <span class="input"><input type="password" v-model="form.password_confirm" value="" size="40" placeholder="确认密码"></span>
+          <span class="input">
+            <input type="password" v-model="form.password_confirm" value="" size="40" placeholder="确认密码">
+          </span>
         </div>
         <button class="submit" v-on:click="register">提交</button>
       </div>
@@ -159,6 +171,7 @@ export default {
   .logo {
     float: left;
     margin: 17px 0 17px 150px;
+    width: 71px;
     height: 46px;
   }
   .title {
