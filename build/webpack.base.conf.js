@@ -65,6 +65,14 @@ module.exports = {
       {
         test: /\.less$/,
         loader: 'style!css!less'
+      },
+      {
+        test: /\.(csv?|xlsx)(\?.*)?$/,
+        loader: 'url-loader',
+        options: {
+          limit: 100000,
+          name: utils.assetsPath('file/[name].[hash:7].[ext]')
+        }
       }
     ]
   }

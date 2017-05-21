@@ -32,5 +32,63 @@ export const editInfo = (body) => {
 
 // 获取省市县三级地址
 export const getRegion = (body) => {
-  return api.post('/jinghuitou/public/index.php/getRegion', body)
+  return api.post('/jinghuitou/public/index.php/region/getRegion', body)
+}
+
+// 获取商户类型列表
+export const getClassification = (body) => {
+  return api.get('/jinghuitou/public/index.php/classification', body)
+}
+
+// 设置商家分类
+export const addClassification = (body) => {
+  return api.post('/jinghuitou/public/index.php/classification/add', body)
+}
+
+// 添加商户
+export const updateShopInfo = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/saveShop', body)
+}
+
+// 获取商户列表
+export const getShopList = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop', body)
+}
+
+/*
+    获取商户详细信息
+    - URL:www.jinghuitou.com/jinghuitou/public/index.php/shop/getInfo
+    - | 参数名     | 默认值      | 注释   |
+      | ------- | -------- | ---- |
+      | shop_id | required | 商店id |
+*/
+export const getShopInfo = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/getInfo', body)
+}
+
+/*
+销售记录导入
+    - URL:www.jinghuitou.com/jinghuitou/public/index.php/shop/importRecords
+    - | 参数名     | 默认值      | 注释           |
+      | ------- | -------- | ------------ |
+      | records | Required | csv\|excel文件 |
+      | shop_id | required | 商店id         |
+*/
+export const uploadRecords = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/importRecords', body)
+}
+
+// 优惠券按距离分析
+export const couponNumByDistance = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/couponNumByDistance', body)
+}
+
+// 优惠券使用情况
+export const couponNumByUseful = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/couponNumByUseful', body)
+}
+
+// 优惠券推荐
+export const getCouponList = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/couponStatus', body)
 }

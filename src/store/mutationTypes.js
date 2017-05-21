@@ -3,6 +3,5 @@
  * @example
  */
 
-// 设置用户资料
-export const SET_USER_INFO = 'SET_USER_INFO'
-export const SET_PHONE = 'SET_PHONE'
+// 设置商户资料
+export const SET_SHOP_INFO = 'SET_SHOP_INFO'

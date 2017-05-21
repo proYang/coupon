@@ -1,13 +1,19 @@
 <template>
   <div class="table">
+    <div class="plugins-tips">投放方案预测</div>
     <div>
-      <span class="el-breadcrumb__item__inner">您当前用户总数<span style="font-weight:700">{{totalNum}}人</span></span>
+      <span class="el-breadcrumb__item__inner">您当前用户总数
+        <span style="font-weight:700">{{buyerNum}}人</span>
+      </span>
     </div>
     <div class="table-item" v-for="item in stamps">
-      <div class="stamp stamp01" v-if="item.type == 1">
+      <div class="stamp stamp01" v-if="item.type.value == 1">
         <div class="par">
-          <p>沁园重邮店</p><sub class="sign">￥</sub><span>{{item.sellingPrice.toFixed(2)}}</span><sub>优惠券</sub>
-          <p>订单满{{item.originalPrice.toFixed(2)}}元</p>
+          <p>沁园重邮店</p>
+          <sub class="sign">￥</sub>
+          <span>{{parseInt(item.sellingPrice)}}</span>
+          <sub>{{item.type.display}}</sub>
+          <p>订单满{{parseInt(item.originalPrice)}}元</p>
         </div>
         <div class="copy">副券
           <p>2017-05-13
@@ -15,84 +21,73 @@
         </div>
         <i></i>
       </div>
-      <div class="stamp stamp02" v-else-if="item.type == 2">
+      <div class="stamp stamp02" v-else-if="item.type.value == 2">
         <div class="par">
-          <p>沁园重邮店</p><sub class="sign">&nbsp</sub><span>{{item.rebate.toFixed(1)}}</span><sub>折扣券</sub>
+          <p>沁园重邮店</p>
+          <sub class="sign">&nbsp</sub>
+          <span>{{(item.rebate*10).toFixed(1)}}</span>
+          <sub>{{item.type.display}}</sub>
         </div>
         <div class="copy">副券
-          <p>2017-05-13
-            <br>2018-08-13</p>
+          <p>2017-05-1
+            <br>2017-09-1</p>
         </div>
         <i></i>
       </div>
-      <p class="info">预测有<span>{{item.num}}</span>人使用此类优惠券</p>
+      <p class="info">预测有
+        <span>{{item.num}}</span>人使用此类优惠券</p>
       <el-button @click='push' type="primary">投放</el-button>
+    </div>
+    <div class="block">
+      <el-pagination layout="prev, pager, next" :page-count='totalPage' :page-size='params.size' :current-page='params.page' @current-change='changePage'>
+      </el-pagination>
     </div>
   </div>
 </template>
 
 <script>
+const $window = window
 export default {
   data() {
     return {
-      totalNum: 723,
-      stamps: [
-        {
-          type: 1,
-          originalPrice: 50,
-          sellingPrice: 20,
-          num: 128
-        },
-        {
-          type: 1,
-          originalPrice: 100,
-          sellingPrice: 50,
-          num: 76
-        },
-        {
-          type: 1,
-          originalPrice: 150,
-          sellingPrice: 80,
-          num: 89
-        },
-        {
-          type: 1,
-          originalPrice: 200,
-          sellingPrice: 99,
-          num: 130
-        },
-        {
-          type: 2,
-          rebate: 8.0,
-          num: 32
-        },
-        {
-          type: 2,
-          rebate: 7.0,
-          num: 98
-        },
-        {
-          type: 2,
-          rebate: 5.5,
-          num: 76
-        },
-        {
-          type: 2,
-          rebate: 6.6,
-          num: 45
-        }
-      ]
+      params: {
+        shop_id: undefined,
+        size: 6,
+        page: 1
+      },
+      buyerNum: 100, // 用户总数
+      stamps: [],
+      totalPage: 1
     }
   },
-  created() {
+  mounted() {
+    this.getShopId()
+    this.getCouponList()
   },
   methods: {
     push() {
       this.$notify({
-        title: '警告',
+        title: '提示',
         message: '您还未开通一键投放功能，请联系客服开通',
         type: 'warning'
       })
+    },
+    getCouponList() {
+      let that = this
+      let params = this.params
+      this.$api.getCouponList(params).then(function (res) {
+        that.stamps = res.data
+        that.buyerNum = res.buyerNum
+        that.totalPage = res.totalPage
+      })
+    },
+    getShopId() {
+      let shopInfo = JSON.parse($window.localStorage.getItem('shop_info'))
+      this.params.shop_id = shopInfo.id
+    },
+    changePage(currentPage) {
+      this.params.page = currentPage
+      this.getCouponList()
     }
   }
 }
@@ -233,5 +228,10 @@ export default {
 .stamp04 .copy {
   padding: 10px 6px 10px 12px;
   font-size: 24px;
+}
+
+.block {
+  text-align: center;
+  margin-left: -180px;
 }
 </style>
