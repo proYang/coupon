@@ -12,7 +12,9 @@
       <el-date-picker v-model="times" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择所需数据的时间范围" align="left">
       </el-date-picker>
     </div>
-    <div id="J_echarts-line" class="echarts"></div>
+    <div class="echarts-container">
+      <div id="J_echarts-line" class="echarts"></div>
+    </div>
   </div>
 </template>
 
@@ -252,5 +254,12 @@ export default {
 
 .demonstration {
   margin-left: 20px;
+}
+
+.echarts-container {
+  position: absolute;
+  left: 30px;
+  top: 60px;
+  overflow: hidden;
 }
 </style>
