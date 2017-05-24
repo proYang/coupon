@@ -3,7 +3,7 @@
     <div class='crumbs'>
       <el-breadcrumb separator='/'>
         <el-breadcrumb-item>
-          <i class="el-icon-menu"></i> 我的优惠券</el-breadcrumb-item>
+          <i class="el-icon-menu"></i> 商户优惠券分析</el-breadcrumb-item>
         <el-breadcrumb-item>周边顾客分析图</el-breadcrumb-item>
       </el-breadcrumb>
     </div>

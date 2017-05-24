@@ -1,12 +1,6 @@
 <template>
   <div class="index">
-    <div class="header">
-      <img class="logo" src="../../assets/img/logo.png" alt="logo">
-      <p class="title">精惠投</p>
-      <router-link :to="{ path: '/login' }">
-        <div class="login">登录</div>
-      </router-link>
-    </div>
+    <indexHead></indexHead>
     <div class="index-content index-content-one">
       <div class="option-info">
         <p>O2O优惠券精准投放系统</p>
@@ -68,6 +62,7 @@
 
 
 <script>
+import indexHead from '../../components/IndexHeader'
 export default {
   data: function () {
     return {
@@ -83,10 +78,10 @@ export default {
   },
   methods: {
     scroll(event) {
-      var $index = document.querySelector('.index')
-      var viewportHeight = window.innerHeight
-      var speed = viewportHeight / 15
-      var timer = setInterval(function () {
+      let $index = document.querySelector('.index')
+      let viewportHeight = window.innerHeight
+      let speed = viewportHeight / 15
+      let timer = setInterval(function () {
         $index.scrollTop = $index.scrollTop + speed
         if ($index.scrollTop == viewportHeight) {
           // 清除动画定时器
@@ -95,9 +90,9 @@ export default {
       }, 1000 / 60)
     },
     register() {
-      var that = this
-      var object = this.form
-      for (var key in object) {
+      let that = this
+      let object = this.form
+      for (let key in object) {
         if (!object[key]) {
           this.$alert('您的信息不完整', '提示', {
             confirmButtonText: '我知道了'
@@ -129,7 +124,7 @@ export default {
         })
         return
       }
-      var obj = Object.assign({}, this.form)
+      let obj = Object.assign({}, this.form)
       this.$api.register(obj).then(function (res) {
         if (res.state == 200) {
           that.$alert('注册成功，快去登录吧', '提示', {
@@ -146,11 +141,14 @@ export default {
       })
     },
     resetForm() {
-      var object = this.form
-      for (var key in object) {
+      let object = this.form
+      for (let key in object) {
         object[key] = ''
       }
     }
+  },
+  components: {
+    indexHead
   }
 }
 </script>
@@ -160,46 +158,6 @@ export default {
   overflow-y: scroll;
   width: 100%;
   height: 100%;
-}
-
-.header {
-  position: fixed;
-  height: 80px;
-  width: 100%;
-  background-color: rgba(255, 255, 255, .2);
-  z-index: 1;
-  .logo {
-    float: left;
-    margin: 17px 0 17px 150px;
-    width: 71px;
-    height: 46px;
-  }
-  .title {
-    float: left;
-    font-size: 28px;
-    margin-left: 20px;
-    color: #fff;
-    line-height: 80px;
-    letter-spacing: .2em;
-  }
-  .login {
-    position: absolute;
-    top: 20px;
-    right: 150px;
-    width: 118px;
-    height: 38px;
-    border: 1px solid #fff;
-    border-radius: 3px;
-    text-align: center;
-    line-height: 38px;
-    color: #fff;
-    transition: all .4s ease-in-out;
-    &:hover {
-      cursor: pointer;
-      border-color: #f45b69;
-      color: #f45b69;
-    }
-  }
 }
 
 .index-content {

@@ -61,7 +61,7 @@ export default {
           this.$api.login(that.ruleForm).then(function (res) {
             if (res.state == 200) {
               // 登陆成功
-              that.resetForm()
+              // that.resetForm()
               localStorage.setItem('ms_user', that.ruleForm.user)
               that.$router.push('/mapChart')
             } else {

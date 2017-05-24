@@ -101,3 +101,14 @@ hr {
 input, select {
     vertical-align:middle;
 }
+
+.clearfix:before {
+    display: table;
+    content: " ";
+}
+
+.clearfix:after{
+    display: table;
+    content: " ";
+    clear: both;
+}

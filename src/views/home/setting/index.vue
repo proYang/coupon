@@ -3,7 +3,7 @@
     <div class="crumbs">
       <el-breadcrumb separator="/">
         <el-breadcrumb-item>
-          <i class="el-icon-setting"></i> 商户设置（您上次更新资料在{{form.updated_at}}）</el-breadcrumb-item>
+          <i class="el-icon-setting"></i> 资料设置（您上次更新资料在{{form.updated_at}}）</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
     <div class="form-box">
