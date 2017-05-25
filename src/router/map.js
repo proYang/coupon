@@ -55,6 +55,10 @@ export default [
       {
         path: '/financeRecharge',
         component: resolve => require(['../views/home/finance/recharge/index'], resolve)
+      },
+      {
+        path: '/financeIndex',
+        component: resolve => require(['../views/home/finance/index'], resolve)
       }
     ]
   }, {

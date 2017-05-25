@@ -1,14 +1,11 @@
 <template>
   <div class="sidebar">
     <el-menu :default-active="onRoutes" class="el-menu-vertical-demo" unique-opened router>
-      <el-submenu index="1">
-        <template slot="title">
-          <i class="el-icon-edit"></i>
-          <span>财务管理</span>
-        </template>
-        <el-menu-item index="financeForms">流水报表</el-menu-item>
-        <el-menu-item index="financeRecharge">商户充值</el-menu-item>
-      </el-submenu>
+  
+      <el-menu-item index="financeIndex">
+        <i class="el-icon-edit"></i>
+        <span>数据统计</span>
+      </el-menu-item>
       <el-submenu index="2">
         <template slot="title">
           <i class="el-icon-setting"></i>
