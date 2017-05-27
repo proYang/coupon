@@ -45,6 +45,18 @@ export default [
         component: resolve => require(['../views/home/coupon/spreadChart/index'], resolve)
       },
       {
+        path: '/salesChart',
+        component: resolve => require(['../views/home/coupon/salesChart/index'], resolve)
+      },
+      {
+        path: '/couponList',
+        component: resolve => require(['../views/home/coupon/couponList/index'], resolve)
+      },
+      {
+        path: '/customersChat',
+        component: resolve => require(['../views/home/coupon/customersChat/index'], resolve)
+      },
+      {
         path: '/upload',
         component: resolve => require(['../views/home/upload/index'], resolve)
       },

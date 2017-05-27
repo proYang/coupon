@@ -1,0 +1,216 @@
+<template>
+  <div>
+    <div class='crumbs'>
+      <el-breadcrumb separator='/'>
+        <el-breadcrumb-item>
+          <i class="el-icon-menu"></i> 商户优惠券分析</el-breadcrumb-item>
+        <el-breadcrumb-item>商品销售状况分析</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div class="block">
+      <span class="demonstration">数据所在时间段：</span>
+      <el-date-picker v-model="times" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择所需数据的时间范围" align="left">
+      </el-date-picker>
+    </div>
+    <div class="echarts-container">
+      <div id="J_echarts-line" class="echarts"></div>
+    </div>
+  </div>
+</template>
+
+<script>
+import echarts from 'echarts'
+import { Loading } from 'element-ui'
+const $window = window
+export default {
+  data: function () {
+    return {
+      chat: null,
+      loadingInstance: undefined,
+      line: {
+        title: {
+          text: '优惠券使用与销量关系对比图',
+          subtext: ''
+        },
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {
+            type: 'shadow'
+          }
+        },
+        legend: {
+          data: ['使用优惠券后销售量', '未使用优惠券销售量']
+        },
+        grid: {
+          left: '3%',
+          right: '4%',
+          bottom: '3%',
+          containLabel: true
+        },
+        xAxis: {
+          type: 'value',
+          boundaryGap: [0, 0.01]
+        },
+        yAxis: {
+          type: 'category',
+          data: ['所选时间段内销售量', '销售总量']
+        },
+        series: [
+          {
+            name: '使用优惠券后销量',
+            type: 'bar',
+            data: [131744, 630230]
+          },
+          {
+            name: '未使用优惠券销量',
+            type: 'bar',
+            data: [94141, 341807]
+          }
+        ]
+      },
+      pickerOtherOption: {
+        editable: false,
+        clearable: false
+      },
+      pickerOptions: {
+        shortcuts: [{
+          text: '最近一周',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近一个月',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近三个月',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
+            picker.$emit('pick', [start, end])
+          }
+        }, {
+          text: '最近一年',
+          onClick(picker) {
+            const end = new Date()
+            const start = new Date()
+            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365)
+            picker.$emit('pick', [start, end])
+          }
+        }],
+        disabledDate(time) {
+          return time.getTime() > Date.now()
+        }
+      },
+      times: [new Date().getTime() - 3600 * 1000 * 24 * 500, new Date()]
+    }
+  },
+  methods: {
+    fetchData() {
+      // 获取数据
+      let that = this
+      let shopInfo = JSON.parse($window.localStorage.getItem('shop_info'))
+      let space = this.line.xAxis.data
+      let series = this.line.series
+
+      let params = {
+        shop_id: shopInfo.id,
+        spacing: 1,
+        num: 100,
+        start: new Date(that.times[0]).getTime(),
+        end: new Date(that.times[1]).getTime()
+      }
+      that.$api.couponNumByDistance(params).then(function (res) {
+        // 关闭loading
+        that.loadingInstance.close()
+        // res.data.forEach(function (item) {
+        //   let index = --item.distance
+        //   if (index >= 10) return
+        //   let couponVal = series[0].data[index]
+        //   let withOutCouponVal = series[1].data[index]
+        //   series[0].data[index] = couponVal + parseInt(item.coupon)
+        //   series[1].data[index] = withOutCouponVal + parseInt(item.withoutCoupon)
+        // })
+        // 绘图
+        that.drawline()
+      })
+    },
+    initChat() {
+      this.chart = echarts.init(document.querySelector('#J_echarts-line'))
+    },
+    drawline() {
+      this.chart.setOption(this.line, true)
+    },
+    pickTime(val) {
+      let times = this.times
+      if (times[0] === null || times[1] === null) return
+      this.loadingInstance = Loading.service({
+        target: '#J_echarts-line',
+        body: 'loading',
+        text: '数据获取中'
+      })
+      // 清除已有数据
+      this.clearOldData()
+      // 重新获取数据
+      this.fetchData()
+    },
+    clearOldData() {
+      let series = this.line.series
+      series[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+      series[1].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    }
+  },
+  mounted() {
+    this.loadingInstance = Loading.service({
+      target: '#J_echarts-line',
+      body: 'loading',
+      text: '数据获取中'
+    })
+    this.initChat()
+    this.fetchData()
+  },
+  destroyed() {
+    // 关闭loading
+    this.loadingInstance.close()
+  }
+}
+</script>
+
+<style scoped>
+.echarts {
+  margin-top: 20px;
+  float: left;
+  width: 900px;
+  height: 400px;
+}
+
+.crumbs {
+  float: left;
+}
+
+.block {
+  float: left;
+  position: relative;
+  top: -12px;
+  left: 50px;
+}
+
+.demonstration {
+  margin-left: 20px;
+}
+
+.echarts-container {
+  position: absolute;
+  left: 30px;
+  top: 60px;
+  overflow: hidden;
+}
+</style>

@@ -25,6 +25,9 @@
         <el-menu-item index="mapChart">周边顾客分析</el-menu-item>
         <el-menu-item index="lineChart">优惠券领取距离分析</el-menu-item>
         <el-menu-item index="spreadChart">优惠券领取和使用状况</el-menu-item>
+        <el-menu-item index="couponList">优惠券领取和使用排行榜</el-menu-item>
+        <el-menu-item index="salesChart">商品销售状况</el-menu-item>
+        <el-menu-item index="customersChat">新老顾客消费分析</el-menu-item>
       </el-submenu>
       <el-submenu index="4">
         <template slot="title">
