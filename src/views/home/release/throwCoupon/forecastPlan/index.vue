@@ -1,23 +1,23 @@
 <template>
   <div>
-    <h1 class="title">投放方案预测</h1>
+    <h1 class="title">智能投放（直接投放到相关用户手中）</h1>
     <el-form :inline="true" :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
       <el-form-item inline label="投放数量" prop="age" :rules="[
-                                              { required: true, message: '投放数量不能为空'},
-                                              { type: 'number', message: '投放数量必须为数字值'}
-                                            ]">
+            { required: true, message: '投放数量不能为空'},
+            { type: 'number', message: '投放数量必须为数字值'}
+          ]">
         <el-input class="input" type="age" v-model.number="numberValidateForm.age" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item label="期望领取率" prop="age" :rules="[
-                                              { required: true, message: '领取率不能为空'},
-                                              { type: 'number', message: '领取率必须为数字值'}
-                                            ]">
+          { required: true, message: '领取率不能为空'},
+          { type: 'number', message: '领取率必须为数字值'}
+          ]">
         <el-input class="input" type="age" v-model.number="numberValidateForm.age" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item label="期望使用率" prop="age" :rules="[
-                                              { required: true, message: '使用率不能为空'},
-                                              { type: 'number', message: '使用率必须为数字值'}
-                                            ]">
+          { required: true, message: '使用率不能为空'},
+          { type: 'number', message: '使用率必须为数字值'}
+        ]">
         <el-input class="input" type="age" v-model.number="numberValidateForm.age" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item>
