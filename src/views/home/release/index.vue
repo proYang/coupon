@@ -3,15 +3,15 @@
     <h1 class="tittle">投放入口选择</h1>
     <div class="option clearfix">
       <div class="option-item">
-        <el-button class="button" type="primary" size="large">人工投放</el-button>
+        <el-button class="button" type="primary" size="large" @click="goThrowCoupon">人工投放</el-button>
         <div class="image-wrap">
-          <img src="../../../assets/img/usepeople.jpg" class="image">
+          <img src="../../../assets/img/usepeople.jpg" class="image" @click="goThrowCoupon">
         </div>
       </div>
       <div class="option-item">
-        <el-button class="button" type="primary" size="large">智能投放</el-button>
+        <el-button class="button" type="primary" size="large" @click="goForecastPlan">智能投放</el-button>
         <div class="image-wrap">
-          <img src="../../../assets/img/usecomputer.jpg" class="image">
+          <img src="../../../assets/img/usecomputer.jpg" class="image" @click="goForecastPlan">
         </div>
       </div>
     </div>
@@ -21,6 +21,12 @@
 <script>
 export default {
   methods: {
+    goThrowCoupon() {
+      this.$router.push({ path: '/throwCoupon' })
+    },
+    goForecastPlan() {
+      this.$router.push({ path: '/forecastPlan' })
+    }
   },
   mounted() {
   }
@@ -59,9 +65,9 @@ export default {
   transition: all 0.6s;
   cursor: pointer;
   &:hover {
-    -webkit-transform: scale(1.06);
-    -ms-transform: scale(1.06);
-    transform: scale(1.06);
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
   }
 }
 
@@ -83,9 +89,9 @@ export default {
   &:hover {
     &+.image-wrap {
       >.image {
-        -webkit-transform: scale(1.06);
-        -ms-transform: scale(1.06);
-        transform: scale(1.06);
+        -webkit-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        transform: scale(1.1);
       }
     }
   }

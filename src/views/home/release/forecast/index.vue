@@ -1,6 +1,6 @@
 <template>
   <div class="table">
-    <div class="plugins-tips">投放方案预测</div>
+    <div class="plugins-tips">优惠券使用情况预测</div>
     <div>
       <span class="el-breadcrumb__item__inner">您当前用户总数
         <span style="font-weight:700">{{buyerNum}}人</span>
@@ -66,11 +66,7 @@ export default {
   },
   methods: {
     push() {
-      this.$notify({
-        title: '提示',
-        message: '您还未开通一键投放功能，请联系客服开通',
-        type: 'warning'
-      })
+      this.$router.push({ path: '/throwCoupon' })
     },
     getCouponList() {
       let that = this

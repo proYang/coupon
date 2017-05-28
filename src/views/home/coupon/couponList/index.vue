@@ -31,7 +31,7 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="130">
           <template scope="scope">
-            <el-button type="primary" size="small">再次投放</el-button>
+            <el-button type="primary" @click="toThrowCoupon" size="small">再次投放</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -181,6 +181,9 @@ export default {
     }
   },
   methods: {
+    toThrowCoupon() {
+      this.$router.push({ path: '/throwCoupon' })
+    },
     formatter(row, column) {
       return row.address
     },
@@ -247,5 +250,4 @@ export default {
   left: 30px;
   top: 60px;
 }
-
 </style>

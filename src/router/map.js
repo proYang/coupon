@@ -31,6 +31,12 @@ export default [
       }, {
         path: '/releaseRecords',
         component: resolve => require(['../views/home/release/records/index'], resolve)
+      }, {
+        path: '/throwCoupon',
+        component: resolve => require(['../views/home/release/throwCoupon/index'], resolve)
+      }, {
+        path: '/forecastPlan',
+        component: resolve => require(['../views/home/release/throwCoupon/forecastPlan/index'], resolve)
       },
       {
         path: '/mapChart',
