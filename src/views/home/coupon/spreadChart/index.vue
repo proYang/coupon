@@ -12,6 +12,7 @@
       <el-date-picker v-model="times" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择所需数据的时间范围" align="left">
       </el-date-picker>
     </div>
+    <div class="plugins-tips tips">小提示：通过每一条消费记录，掌握已消费顾客是否使用优惠券，以及已领取优惠券但未消费的潜在客户。</div>
     <div class="echarts-container">
       <div id="J_echarts-bar" class="echarts"></div>
       <div id="J_echarts-pie" class="echarts"></div>
@@ -30,7 +31,7 @@ export default {
       bar: {
         color: ['#20a0ff', '#13CE66', '#F7BA2A', '#FF4949'],
         title: {
-          text: '优惠券领取和使用状况对比图（一）'
+          text: '优惠券领取和使用记录数量图'
         },
         tooltip: {
           trigger: 'axis',
@@ -46,7 +47,7 @@ export default {
           containLabel: true
         },
         xAxis: {
-          data: ['已领券优惠券', '未领券优惠券', '已使用优惠券', '未使用优惠券'],
+          data: ['已领券但未消费用户', '已领券并消费用户', '未领券但已消费用户'],
           axisTick: {
             alignWithLabel: true
           }
@@ -64,15 +65,15 @@ export default {
             name: '人数',
             type: 'bar',
             barWidth: '50%',
-            data: [0, 0, 0, 0]
+            data: [0, 0, 0]
           }
         ]
       },
       pie: {
         title: {
-          text: '优惠券领取和使用状况对比图（二）'
+          text: '优惠券领取和使用记录占比图'
         },
-        color: ['#13CE66', '#F7BA2A', '#FF4949', '#61a0a8', '#20a0ff'],
+        color: ['#1abc9c', '#324057', '#9a59b5'],
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b}: {c}人 ({d}%)'
@@ -81,14 +82,14 @@ export default {
           orient: 'vertical',
           top: 30,
           x: 'left',
-          data: ['已领券优惠券', '未领券优惠券', '已使用优惠券', '未使用优惠券']
+          data: ['已领券但未消费用户', '已领券并消费用户', '未领券但已消费用户']
         },
         series: [
           {
             name: '领取状态',
             type: 'pie',
-            selectedMode: 'single',
-            radius: [0, '30%'],
+            radius: '70%',
+            center: ['50%', '60%'],
             label: {
               normal: {
                 position: 'inner'
@@ -100,22 +101,9 @@ export default {
               }
             },
             data: [
-              { value: 0, name: '已领券优惠券', selected: true },
-              { value: 0, name: '未领券优惠券' }
-            ]
-          },
-          {
-            name: '使用状态',
-            type: 'pie',
-            radius: ['50%', '80%'],
-            label: {
-              normal: {
-                position: 'outside'
-              }
-            },
-            data: [
-              { value: 0, name: '已使用优惠券', selected: true },
-              { value: 0, name: '未使用优惠券' }
+              { value: 0, name: '已领券但未消费用户' },
+              { value: 0, name: '已领券并消费用户' },
+              { value: 0, name: '未领券但已消费用户' }
             ]
           }
         ]
@@ -182,13 +170,11 @@ export default {
         that.bar.series[0].data[0] = res.data.spendWithCoupon
         that.bar.series[0].data[1] = res.data.spendWithoutCoupon
         that.bar.series[0].data[2] = res.data.receiveCouponWithSpend
-        that.bar.series[0].data[3] = res.data.receiveCouponWithoutSpend
         // 画柱状图
         that.drawbar()
         that.pie.series[0].data[0].value = res.data.spendWithCoupon
         that.pie.series[0].data[1].value = res.data.spendWithoutCoupon
-        that.pie.series[1].data[0].value = res.data.receiveCouponWithSpend
-        that.pie.series[1].data[1].value = res.data.receiveCouponWithoutSpend
+        that.pie.series[0].data[2].value = res.data.receiveCouponWithSpend
         // 画饼状图
         that.drawpie()
       })
@@ -231,9 +217,9 @@ export default {
 <style lang='less' scoped>
 .echarts {
   margin-top: 20px;
-  float: left;
-  width: 500px;
+  width: 510px;
   height: 400px;
+  float: left;
 }
 
 .crumbs {
@@ -249,8 +235,16 @@ export default {
 
 .echarts-container {
   position: absolute;
-  left: 30px;
-  top: 60px;
+  left: 35px;
+  top: 120px;
   overflow: hidden;
+}
+
+.tips {
+  position: absolute;
+  top: 70px;
+  width: 85%;
+  font-size: 14px;
+  padding: 15px 10px;
 }
 </style>

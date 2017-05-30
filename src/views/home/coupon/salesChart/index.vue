@@ -12,6 +12,7 @@
       <el-date-picker v-model="times" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择所需数据的时间范围" align="left">
       </el-date-picker>
     </div>
+    <div class="plugins-tips tips">小提示：更清晰的显示，使用优惠券前后同期销量的对比情况。</div>
     <div class="echarts-container">
       <div id="J_echarts-line" class="echarts"></div>
     </div>
@@ -32,6 +33,7 @@ export default {
           text: '优惠券使用与销量关系对比图',
           subtext: ''
         },
+        color: ['#9a59b5', '#324057'],
         tooltip: {
           trigger: 'axis',
           axisPointer: {
@@ -209,8 +211,16 @@ export default {
 
 .echarts-container {
   position: absolute;
-  left: 30px;
-  top: 60px;
+  left: 35px;
+  top: 100px;
   overflow: hidden;
+}
+
+.tips {
+  position: absolute;
+  top: 70px;
+  width: 85%;
+  font-size: 14px;
+  padding: 15px 10px;
 }
 </style>

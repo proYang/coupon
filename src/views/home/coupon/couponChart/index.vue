@@ -258,7 +258,7 @@ export default {
 
 .echarts-container {
   position: absolute;
-  left: 30px;
+  left: 35px;
   top: 60px;
   overflow: hidden;
 }

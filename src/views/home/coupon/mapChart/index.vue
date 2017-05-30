@@ -7,6 +7,7 @@
         <el-breadcrumb-item>周边顾客分析图</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
+    <div class="plugins-tips tips">小提示：以您的店铺位置为中心，查看周边顾客状态。</div>
     <div id="J_echarts-map" class='mix-echarts'></div>
   </div>
 </template>
@@ -259,5 +260,11 @@ export default {
 .mix-echarts {
   width: 900px;
   height: 500px;
+}
+
+.tips {
+  font-size: 14px;
+  padding: 15px 10px;
+  margin-bottom: 15px;
 }
 </style>

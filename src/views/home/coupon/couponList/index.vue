@@ -12,8 +12,9 @@
       <el-date-picker v-model="times" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择所需数据的时间范围" align="left">
       </el-date-picker>
     </div>
+    <div class="plugins-tips tips">小提示：查看已投放优惠券的使用情况，帮您的店铺有针对性的进行下次优惠券投放。</div>
     <div class="table-container">
-      <el-table :data="tableData" max-height="400" border class="table" :default-sort="{prop: 'number', order: 'descending'}">
+      <el-table :data="tableData" border class="table" :default-sort="{prop: 'number', order: 'descending'}">
         <el-table-column prop="name" label="优惠券名称" width="170">
         </el-table-column>
         <el-table-column prop="number" label="领取数量" sortable width="150">
@@ -97,86 +98,62 @@ export default {
         date: '2016-05-02',
         number: 120,
         probability: 0.82,
-        name: '王小虎',
+        name: '端午节促销券',
         tag: '折扣券'
       }, {
         date: '2016-05-04',
         number: 120,
         probability: 0.82,
-        name: '王小虎',
+        name: '端午节促销券',
         tag: '满减券'
       }, {
         date: '2016-05-01',
         number: 120,
         probability: 0.82,
-        name: '王小虎',
+        name: '端午节促销券',
         tag: '满减券'
       }, {
         date: '2016-05-03',
         number: 120,
         probability: 0.82,
-        name: '王小虎',
+        name: '端午节促销券',
         tag: '折扣券'
       }, {
         date: '2016-05-03',
         number: 120,
         probability: 0.82,
-        name: '王小虎',
+        name: '端午节促销券',
         tag: '满减券'
       }, {
         date: '2016-05-03',
         number: 120,
         probability: 0.82,
-        name: '王小虎',
+        name: '端午节促销券',
         tag: '折扣券'
       }, {
         date: '2016-05-03',
         number: 120,
         probability: 0.82,
-        name: '王小虎',
+        name: '端午节促销券',
         tag: '折扣券'
       }, {
         date: '2016-05-03',
         number: 120,
         probability: 0.82,
-        name: '王小虎',
+        name: '端午节促销券',
         tag: '满减券'
       }, {
         date: '2016-05-03',
         number: 120,
         probability: 0.82,
-        name: '王小虎',
+        name: '端午节促销券',
         tag: '折扣券'
       }, {
         date: '2016-05-03',
         number: 120,
         probability: 0.82,
-        name: '王小虎',
+        name: '端午节促销券',
         tag: '折扣券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '王小虎',
-        tag: '满减券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '王小虎',
-        tag: '折扣券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '王小虎',
-        tag: '折扣券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '王小虎',
-        tag: '满减券'
       }]
     }
   },
@@ -223,10 +200,11 @@ export default {
 
 <style scoped>
 .table {
-  margin-top: 20px;
+  margin-top: 60px;
+  margin-left: 10px;
   margin-bottom: 40px;
   float: left;
-  width: 900px;
+  width: 990px;
   height: auto;
 }
 
@@ -249,5 +227,13 @@ export default {
   position: absolute;
   left: 30px;
   top: 60px;
+}
+
+.tips {
+  position: absolute;
+  top: 70px;
+  width: 85%;
+  font-size: 14px;
+  padding: 15px 10px;
 }
 </style>

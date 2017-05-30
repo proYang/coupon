@@ -12,6 +12,7 @@
       <el-date-picker v-model="times" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择所需数据的时间范围" align="left">
       </el-date-picker>
     </div>
+    <div class="plugins-tips tips">小提示：查看顾客领取优惠券的距离信息，让您掌握客户的大致分布情况。</div>
     <div class="echarts-container">
       <div id="J_echarts-line" class="echarts"></div>
     </div>
@@ -67,7 +68,12 @@ export default {
           type: 'category',
           boundaryGap: false,
           axisLabel: {
-            formatter: '{value} km'
+            formatter: (value) => {
+              if (value === 10) {
+                return `${value} km以上`
+              }
+              return `${value} km`
+            }
           },
           data: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
         },
@@ -258,8 +264,16 @@ export default {
 
 .echarts-container {
   position: absolute;
-  left: 30px;
-  top: 60px;
+  left: 35px;
+  top: 100px;
   overflow: hidden;
+}
+
+.tips {
+  position: absolute;
+  top: 70px;
+  width: 85%;
+  font-size: 14px;
+  padding: 15px 10px;
 }
 </style>
