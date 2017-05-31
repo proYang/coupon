@@ -26,7 +26,7 @@ export default {
   width: 100%;
   height: 100%;
   text-align: center;
-  background: url('../../assets/img/about_bg.jpg') no-repeat;
+  background: url('~assets/img/about_bg.jpg') no-repeat;
   background-size: cover;
   background-color: rgba(32, 45, 92, .87);
   .title {

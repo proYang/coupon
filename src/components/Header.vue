@@ -6,7 +6,7 @@
     <div class="user-info">
       <el-dropdown trigger="click" @command="handleCommand">
         <span class="el-dropdown-link">
-          <img class="user-logo" src="../assets/img/logo_user.jpg"> {{username}}
+          <img class="user-logo" src="~assets/img/logo_user.jpg"> {{username}}
         </span>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item command="seetingIndex">商户设置</el-dropdown-item>

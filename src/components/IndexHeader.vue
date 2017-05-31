@@ -1,6 +1,6 @@
 <template>
   <div class="header clearfix">
-    <img class="logo" src="../assets/img/logo.png" alt="logo">
+    <img class="logo" src="~assets/img/logo.png" alt="logo">
     <p class="title">精惠投</p>
     <div class="login" @click="login">登录</div>
     <ul class="nav clearfix">

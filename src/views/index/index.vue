@@ -167,7 +167,7 @@ export default {
 }
 
 .index-content-one {
-  background: url('../../assets/img/background.jpg') center center / auto 980px no-repeat #fff;
+  background: url('~assets/img/background.jpg') center center / auto 980px no-repeat #fff;
 }
 
 .option-info {
@@ -214,7 +214,7 @@ export default {
       top: 0;
       height: 100%;
       width: 100%;
-      background: url('../../assets/img/background2.jpg') center center / auto 980px no-repeat #fff;
+      background: url('~assets/img/background2.jpg') center center / auto 980px no-repeat #fff;
     }
     &-mask {
       position: absolute;

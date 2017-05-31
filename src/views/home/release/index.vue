@@ -5,13 +5,13 @@
       <div class="option-item">
         <el-button class="button" type="primary" size="large" @click="goThrowCoupon">人工投放</el-button>
         <div class="image-wrap">
-          <img src="../../../assets/img/usepeople.jpg" class="image" @click="goThrowCoupon">
+          <img src="~assets/img/usepeople.jpg" class="image" @click="goThrowCoupon">
         </div>
       </div>
       <div class="option-item">
         <el-button class="button" type="primary" size="large" @click="goForecastPlan">智能投放</el-button>
         <div class="image-wrap">
-          <img src="../../../assets/img/usecomputer.jpg" class="image" @click="goForecastPlan">
+          <img src="~assets/img/usecomputer.jpg" class="image" @click="goForecastPlan">
         </div>
       </div>
     </div>
