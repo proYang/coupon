@@ -140,6 +140,7 @@ export default {
 
 .page {
   margin: 40px;
+  text-align: center;
 }
 
 .demo-table-expand {
