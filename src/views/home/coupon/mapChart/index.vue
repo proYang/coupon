@@ -258,7 +258,7 @@ export default {
 
 <style scoped>
 .mix-echarts {
-  width: 900px;
+  width: 100%;
   height: 500px;
 }
 

@@ -26,8 +26,6 @@ export default {
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 600px;
-  max-height: 740px;
   text-align: center;
   background: url('~assets/img/product_bg.jpg') no-repeat;
   background-size: cover;

@@ -29,7 +29,7 @@ export default {
     return {
       loadingInstance: undefined,
       bar: {
-        color: ['#20a0ff', '#13CE66', '#F7BA2A', '#FF4949'],
+        color: ['#224870', '#13CE66', '#F7BA2A', '#FF4949'],
         title: {
           text: '优惠券领取和使用记录数量图'
         },
@@ -73,7 +73,8 @@ export default {
         title: {
           text: '优惠券领取和使用记录占比图'
         },
-        color: ['#1abc9c', '#324057', '#9a59b5'],
+        // color: ['#1abc9c', '#324057', '#9a59b5'],
+        color: ['#92140c', '#fa8334', '#111d4a'],
         tooltip: {
           trigger: 'item',
           formatter: '{a} <br/>{b}: {c}人 ({d}%)'
@@ -222,7 +223,7 @@ export default {
 <style lang='less' scoped>
 .echarts {
   margin-top: 20px;
-  width: 510px;
+  width: 50%;
   height: 400px;
   float: left;
 }
@@ -240,9 +241,11 @@ export default {
 
 .echarts-container {
   position: absolute;
+  position: absolute;
+  width: 85%;
+  height: 100%;
   left: 35px;
   top: 120px;
-  overflow: hidden;
 }
 
 .tips {

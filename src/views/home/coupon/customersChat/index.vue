@@ -152,7 +152,6 @@ export default {
       let shopInfo = JSON.parse($window.localStorage.getItem('shop_info'))
       let space = this.line.xAxis.data
       let series = this.line.series
-
       let params = {
         shop_id: shopInfo.id,
         start: new Date(that.times[0]).getTime(),
@@ -225,8 +224,8 @@ export default {
 .echarts {
   margin-top: 20px;
   float: left;
-  width: 960px;
-  height: 480px;
+  width: 100%;
+  height: 100%;
 }
 
 .crumbs {
@@ -246,9 +245,10 @@ export default {
 
 .echarts-container {
   position: absolute;
+  width: 85%;
+  height: 100%;
   left: 35px;
   top: 100px;
-  overflow: hidden;
 }
 
 .tips {

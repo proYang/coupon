@@ -14,7 +14,7 @@
     </div>
     <div class="plugins-tips tips">小提示：查看已投放优惠券的使用情况，帮您的店铺有针对性的进行下次优惠券投放。</div>
     <div class="table-container" id="J_table-container">
-      <el-table :data="tableData" border class="table" :default-sort="{prop: 'number', order: 'descending'}">
+      <el-table :data="tableData" border @sort-change='sortChange' @filter-change='fliterChange' class="table" :default-sort="{prop: 'number', order: 'descending'}">
         <el-table-column prop="display_name" label="优惠券名称" width="170">
         </el-table-column>
         <el-table-column prop="receive_num" label="领取数量" sortable width="150">
@@ -25,9 +25,9 @@
         </el-table-column>
         <el-table-column prop="use_percentage" label="使用率" sortable width="150">
         </el-table-column>
-        <el-table-column prop="type_id" label="类型" width="120" :filters="[{ text: '折扣券', value: 2 }, { text: '满减券', value: 1 }]" :filter-method="filterTag" filter-placement="bottom-end">
+        <el-table-column prop="type_id" label="类型" width="130" :filters="[{ text: '折扣券', value: 2 }, { text: '满减券', value: 1 }]" filter-placement="bottom-end">
           <template scope="scope">
-            <el-tag :type="scope.row.type_id === '折扣券' ? 'primary' : 'success'" close-transition>{{scope.row.tag}}</el-tag>
+            <el-tag :type="scope.row.type_id == 1 ? 'primary' : 'success'" close-transition>{{scope.row.type_id == 1 ? '满减券':'折扣券'}}</el-tag>
           </template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="130">
@@ -36,7 +36,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-pagination class="page" layout="prev, pager, next" :total="1000">
+      <el-pagination class="page" layout="prev, pager, next" :page-count='totalPage' :page-size='params.size' :current-page='params.page' @current-change='changePage'>
       </el-pagination>
     </div>
   </div>
@@ -49,6 +49,11 @@ const $window = window
 export default {
   data: function () {
     return {
+      params: {
+        page: 1,
+        size: 10
+      },
+      totalPage: 1,
       pickerOtherOption: {
         editable: false,
         clearable: false
@@ -102,27 +107,65 @@ export default {
     formatter(row, column) {
       return row.address
     },
-    filterTag(value, row) {
-      return row.tag === value
+    fliterChange(filters) {
+      let arr = filters['el-table_1_column_6']
+      if (arr.length >= 2) {
+        this.params.type_id = ''
+      } else {
+        this.params.type_id = arr[0]
+      }
+      this.loadingInstance = Loading.service({
+        target: '#J_table-container',
+        body: 'loading',
+        text: '数据获取中'
+      })
+      // 重新获取数据
+      this.fetchData()
     },
     fetchData() {
       // 获取数据
       let that = this
       let shopInfo = JSON.parse($window.localStorage.getItem('shop_info'))
-      let params = {
-        shop_id: shopInfo.id,
-        start: new Date(that.times[0]).getTime(),
-        end: new Date(that.times[1]).getTime()
-      }
-      this.$api.getCouponStatus(params).then(function (res) {
+      this.params.shop_id = shopInfo.id
+      this.params.start = new Date(that.times[0]).getTime()
+      this.params.end = new Date(that.times[1]).getTime()
+      this.$api.getCouponStatus(this.params).then(function (res) {
         that.tableData = res.data
+        that.totalPage = res.totalPage
         // 关闭loading
         that.loadingInstance.close()
       })
     },
+    sortChange(params) {
+      if (params.order == 'ascending') {
+        this.params.order = 'asc'
+      } else {
+        this.params.order = 'desc'
+      }
+      if (params.prop !== null) {
+        this.params.order_column = params.prop
+      }
+      this.loadingInstance = Loading.service({
+        target: '#J_table-container',
+        body: 'loading',
+        text: '数据获取中'
+      })
+      // 重新获取数据
+      this.fetchData()
+    },
     pickTime(val) {
       let times = this.times
       if (times[0] === null || times[1] === null) return
+      this.loadingInstance = Loading.service({
+        target: '#J_table-container',
+        body: 'loading',
+        text: '数据获取中'
+      })
+      // 重新获取数据
+      this.fetchData()
+    },
+    changePage(currentPage) {
+      this.params.page = currentPage
       this.loadingInstance = Loading.service({
         target: '#J_table-container',
         body: 'loading',
@@ -152,7 +195,7 @@ export default {
   margin-top: 60px;
   margin-left: 10px;
   margin-bottom: 20px;
-  width: 990px;
+  width: 100%;
   height: auto;
 }
 
@@ -173,6 +216,8 @@ export default {
 
 .table-container {
   position: absolute;
+  width: 85%;
+  height: 100%;
   left: 30px;
   top: 60px;
 }

@@ -242,8 +242,7 @@ export default {
 <style scoped>
 .echarts {
   margin-top: 20px;
-  float: left;
-  width: 900px;
+  width: 100%;
   height: 400px;
 }
 
@@ -264,9 +263,10 @@ export default {
 
 .echarts-container {
   position: absolute;
+  width: 85%;
+  height: 100%;
   left: 35px;
   top: 100px;
-  overflow: hidden;
 }
 
 .tips {
