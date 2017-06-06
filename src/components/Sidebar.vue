@@ -14,9 +14,14 @@
         <el-menu-item index="setting">资料设置</el-menu-item>
         <el-menu-item index="changePassword">密码设置</el-menu-item>
       </el-submenu>
-      <el-menu-item index="upload">
-        <i class="el-icon-upload"></i>数据导入
-      </el-menu-item>
+      <el-submenu index="5">
+        <template slot="title">
+          <i class="el-icon-upload"></i>
+          <span>数据接入</span>
+        </template>
+        <el-menu-item index="uploadFile">文件上传</el-menu-item>
+        <el-menu-item index="uploadSql">数据库对接</el-menu-item>
+      </el-submenu>
       <el-submenu index="3">
         <template slot="title">
           <i class="el-icon-menu"></i>

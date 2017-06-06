@@ -106,6 +106,12 @@ export default {
         })
         return
       }
+      if (!/^(0|86|17951)?(13[0-9]|15[012356789]|17[678]|18[0-9]|14[57])[0-9]{8}$/.test(this.form.phone_number)) {
+        this.$alert('请输入正确的电话号码', '提示', {
+          confirmButtonText: '我知道了'
+        })
+        return
+      }
       if (this.form.nickname.length < 5 || this.form.username < 5) {
         this.$alert('用户名或公司名称必须大于五个字符', '提示', {
           confirmButtonText: '我知道了'

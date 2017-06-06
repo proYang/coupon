@@ -61,12 +61,12 @@ export default {
           {
             name: '使用优惠券后销量',
             type: 'bar',
-            data: [131744, 630230]
+            data: [0, 0]
           },
           {
             name: '未使用优惠券销量',
             type: 'bar',
-            data: [94141, 341807]
+            data: [0, 0]
           }
         ]
       },
@@ -125,22 +125,16 @@ export default {
 
       let params = {
         shop_id: shopInfo.id,
-        spacing: 1,
-        num: 100,
         start: new Date(that.times[0]).getTime(),
         end: new Date(that.times[1]).getTime()
       }
-      that.$api.couponNumByDistance(params).then(function (res) {
+      that.$api.getSaleStatus(params).then(function (res) {
         // 关闭loading
         that.loadingInstance.close()
-        // res.data.forEach(function (item) {
-        //   let index = --item.distance
-        //   if (index >= 10) return
-        //   let couponVal = series[0].data[index]
-        //   let withOutCouponVal = series[1].data[index]
-        //   series[0].data[index] = couponVal + parseInt(item.coupon)
-        //   series[1].data[index] = withOutCouponVal + parseInt(item.withoutCoupon)
-        // })
+        series[0].data[1] = res.saleWithCouponAll
+        series[1].data[1] = res.saleWithoutCouponAll
+        series[0].data[0] = res.saleWithCouponCurrent
+        series[1].data[0] = res.saleWithoutCouponCurrent
         // 绘图
         that.drawline()
       })

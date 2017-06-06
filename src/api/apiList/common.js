@@ -92,3 +92,23 @@ export const couponNumByUseful = (body) => {
 export const getCouponList = (body) => {
   return api.post('/jinghuitou/public/index.php/shop/couponStatus', body)
 }
+
+// 总体分析
+export const getTotalStatistics = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/totalStatistics', body)
+}
+
+// 券的使用情况
+export const getCouponStatus = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/couponStatus', body)
+}
+
+// 销售状况
+export const getSaleStatus = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/saleStatus', body)
+}
+
+// 新用户销售情况
+export const getSaleStatusByBuyer = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/saleStatusByBuyer', body)
+}

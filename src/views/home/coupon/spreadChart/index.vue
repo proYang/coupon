@@ -164,17 +164,22 @@ export default {
         end: new Date(that.times[1]).getTime()
       }
       this.$api.couponNumByUseful(params).then(function (res) {
+        // res.data = {
+        //   spendWithCoupon: 234,
+        //   spendWithoutCoupon: 345,
+        //   receiveCouponWithSpend: 521
+        // }
         // 关闭loading
         that.loadingInstance.close()
         // 0-已领券  1-未领取 2-已使用 3-未使用
         that.bar.series[0].data[0] = res.data.spendWithCoupon
         that.bar.series[0].data[1] = res.data.spendWithoutCoupon
-        that.bar.series[0].data[2] = res.data.receiveCouponWithSpend
+        that.bar.series[0].data[2] = res.data.receiveCouponWithoutSpend
         // 画柱状图
         that.drawbar()
         that.pie.series[0].data[0].value = res.data.spendWithCoupon
         that.pie.series[0].data[1].value = res.data.spendWithoutCoupon
-        that.pie.series[0].data[2].value = res.data.receiveCouponWithSpend
+        that.pie.series[0].data[2].value = res.data.receiveCouponWithoutSpend
         // 画饼状图
         that.drawpie()
       })
