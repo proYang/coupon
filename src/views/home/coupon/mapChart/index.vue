@@ -79,7 +79,7 @@ export default {
             type: 'scatter',
             coordinateSystem: 'bmap',
             data: [{
-              name: '沁园重邮店',
+              name: '您的店铺',
               value: [106.610500, 29.53832]
             }],
             label: {

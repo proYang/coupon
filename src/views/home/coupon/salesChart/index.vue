@@ -14,7 +14,7 @@
     </div>
     <div class="plugins-tips tips">小提示：更清晰的显示，使用优惠券前后同期销量的对比情况。</div>
     <div class="echarts-container">
-      <div id="J_echarts-line" class="echarts"></div>
+      <div id="J_echarts-sales" class="echarts"></div>
     </div>
   </div>
 </template>
@@ -140,7 +140,7 @@ export default {
       })
     },
     initChat() {
-      this.chart = echarts.init(document.querySelector('#J_echarts-line'))
+      this.chart = echarts.init(document.querySelector('#J_echarts-sales'))
     },
     drawline() {
       this.chart.setOption(this.line, true)
@@ -149,24 +149,17 @@ export default {
       let times = this.times
       if (times[0] === null || times[1] === null) return
       this.loadingInstance = Loading.service({
-        target: '#J_echarts-line',
+        target: '#J_echarts-sales',
         body: 'loading',
         text: '数据获取中'
       })
-      // 清除已有数据
-      this.clearOldData()
       // 重新获取数据
       this.fetchData()
-    },
-    clearOldData() {
-      let series = this.line.series
-      series[0].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-      series[1].data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     }
   },
   mounted() {
     this.loadingInstance = Loading.service({
-      target: '#J_echarts-line',
+      target: '#J_echarts-sales',
       body: 'loading',
       text: '数据获取中'
     })

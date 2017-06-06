@@ -13,21 +13,21 @@
       </el-date-picker>
     </div>
     <div class="plugins-tips tips">小提示：查看已投放优惠券的使用情况，帮您的店铺有针对性的进行下次优惠券投放。</div>
-    <div class="table-container">
+    <div class="table-container" id="J_table-container">
       <el-table :data="tableData" border class="table" :default-sort="{prop: 'number', order: 'descending'}">
-        <el-table-column prop="name" label="优惠券名称" width="170">
+        <el-table-column prop="display_name" label="优惠券名称" width="170">
         </el-table-column>
-        <el-table-column prop="number" label="领取数量" sortable width="150">
+        <el-table-column prop="receive_num" label="领取数量" sortable width="150">
         </el-table-column>
-        <el-table-column prop="number" label="使用数量" sortable width="150">
+        <el-table-column prop="use_num" label="使用数量" sortable width="150">
         </el-table-column>
-        <el-table-column prop="probability" label="领取率" sortable width="150">
+        <el-table-column prop="receive_percentage" label="领取率" sortable width="150">
         </el-table-column>
-        <el-table-column prop="probability" label="使用率" sortable width="150">
+        <el-table-column prop="use_percentage" label="使用率" sortable width="150">
         </el-table-column>
-        <el-table-column prop="tag" label="类型" width="120" :filters="[{ text: '折扣券', value: '折扣券' }, { text: '满减券', value: '满减券' }]" :filter-method="filterTag" filter-placement="bottom-end">
+        <el-table-column prop="type_id" label="类型" width="120" :filters="[{ text: '折扣券', value: 2 }, { text: '满减券', value: 1 }]" :filter-method="filterTag" filter-placement="bottom-end">
           <template scope="scope">
-            <el-tag :type="scope.row.tag === '折扣券' ? 'primary' : 'success'" close-transition>{{scope.row.tag}}</el-tag>
+            <el-tag :type="scope.row.type_id === '折扣券' ? 'primary' : 'success'" close-transition>{{scope.row.tag}}</el-tag>
           </template>
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="130">
@@ -92,67 +92,7 @@ export default {
         }
       },
       times: [new Date().getTime() - 3600 * 1000 * 24 * 500, new Date()],
-      tableData: [{
-        date: '2016-05-02',
-        number: 120,
-        probability: 0.82,
-        name: '端午节促销券',
-        tag: '折扣券'
-      }, {
-        date: '2016-05-04',
-        number: 120,
-        probability: 0.82,
-        name: '端午节促销券',
-        tag: '满减券'
-      }, {
-        date: '2016-05-01',
-        number: 120,
-        probability: 0.82,
-        name: '端午节促销券',
-        tag: '满减券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '端午节促销券',
-        tag: '折扣券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '端午节促销券',
-        tag: '满减券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '端午节促销券',
-        tag: '折扣券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '端午节促销券',
-        tag: '折扣券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '端午节促销券',
-        tag: '满减券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '端午节促销券',
-        tag: '折扣券'
-      }, {
-        date: '2016-05-03',
-        number: 120,
-        probability: 0.82,
-        name: '端午节促销券',
-        tag: '折扣券'
-      }]
+      tableData: []
     }
   },
   methods: {
@@ -168,30 +108,41 @@ export default {
     fetchData() {
       // 获取数据
       let that = this
+      let shopInfo = JSON.parse($window.localStorage.getItem('shop_info'))
+      let params = {
+        shop_id: shopInfo.id,
+        start: new Date(that.times[0]).getTime(),
+        end: new Date(that.times[1]).getTime()
+      }
+      this.$api.getCouponStatus(params).then(function (res) {
+        that.tableData = res.data
+        // 关闭loading
+        that.loadingInstance.close()
+      })
     },
     pickTime(val) {
       let times = this.times
       if (times[0] === null || times[1] === null) return
-      // this.loadingInstance = Loading.service({
-      //   target: '#J_echarts-line',
-      //   body: 'loading',
-      //   text: '数据获取中'
-      // })
+      this.loadingInstance = Loading.service({
+        target: '#J_table-container',
+        body: 'loading',
+        text: '数据获取中'
+      })
       // 重新获取数据
       this.fetchData()
     }
   },
   mounted() {
-    // this.loadingInstance = Loading.service({
-    //   target: '#J_echarts-line',
-    //   body: 'loading',
-    //   text: '数据获取中'
-    // })
+    this.loadingInstance = Loading.service({
+      target: '#J_table-container',
+      body: 'loading',
+      text: '数据获取中'
+    })
     this.fetchData()
   },
   destroyed() {
     // 关闭loading
-    // this.loadingInstance.close()
+    this.loadingInstance.close()
   }
 }
 </script>
