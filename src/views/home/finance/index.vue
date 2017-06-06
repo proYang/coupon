@@ -24,14 +24,18 @@
 
 <script>
 import CountUp from 'countup.js'
+const $window = window
 export default {
   data() {
     return {
+      params: {
+        shop_id: undefined
+      },
       counts: {
-        todayPut: 236,
-        todayGet: 48,
-        totalPut: 2354,
-        totalGet: 864
+        todayPut: 0,
+        todayGet: 0,
+        totalPut: 0,
+        totalGet: 0
       },
       options: {
         useEasing: true,
@@ -65,13 +69,34 @@ export default {
       let $todayPut = document.getElementById('todayPut')
       let anmiate = new CountUp($todayPut, 0, count, 0, 1.5, this.options)
       anmiate.start()
+    },
+    getShopId() {
+      let shopInfo = JSON.parse($window.localStorage.getItem('shop_info'))
+      this.params.shop_id = shopInfo.id
+    },
+    getTotalInfo() {
+      let that = this
+      let params = this.params
+      return new Promise(function (resolve, reject) {
+        that.$api.getTotalStatistics(params).then(function (res) {
+          that.counts.todayPut = res.distributeNumToday
+          that.counts.todayGet = res.receiveNumToday
+          that.counts.totalPut = res.distributeNumAll
+          that.counts.totalGet = res.receiveNumAll
+          resolve()
+        })
+      })
     }
   },
   mounted() {
-    this.totalPutAnimate()
-    this.totalGetAnimate()
-    this.todayPutAnimate()
-    this.todayGetAnimate()
+    let that = this
+    this.getShopId()
+    this.getTotalInfo().then(function () {
+      that.totalPutAnimate()
+      that.totalGetAnimate()
+      that.todayPutAnimate()
+      that.todayGetAnimate()
+    })
   }
 }
 </script>

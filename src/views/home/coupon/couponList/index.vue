@@ -36,10 +36,8 @@
           </template>
         </el-table-column>
       </el-table>
-      <div class="block">
-        <el-pagination layout="prev, pager, next" :total="1000">
-        </el-pagination>
-      </div>
+      <el-pagination class="page" layout="prev, pager, next" :total="1000">
+      </el-pagination>
     </div>
   </div>
 </template>
@@ -202,8 +200,7 @@ export default {
 .table {
   margin-top: 60px;
   margin-left: 10px;
-  margin-bottom: 40px;
-  float: left;
+  margin-bottom: 20px;
   width: 990px;
   height: auto;
 }
@@ -235,5 +232,10 @@ export default {
   width: 85%;
   font-size: 14px;
   padding: 15px 10px;
+}
+
+.page {
+  text-align: center;
+  margin-bottom: 20px;
 }
 </style>

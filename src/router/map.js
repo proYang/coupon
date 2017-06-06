@@ -63,8 +63,11 @@ export default [
         component: resolve => require(['../views/home/coupon/customersChat/index'], resolve)
       },
       {
-        path: '/upload',
-        component: resolve => require(['../views/home/upload/index'], resolve)
+        path: '/uploadFile',
+        component: resolve => require(['../views/home/upload/file/index'], resolve)
+      }, {
+        path: '/uploadSql',
+        component: resolve => require(['../views/home/upload/sql/index'], resolve)
       },
       {
         path: '/financeForms',

@@ -7,32 +7,35 @@
           <el-input v-model="ruleForm.name"></el-input>
         </el-form-item>
         <el-form-item label="优惠券类型" prop="region">
-          <el-select v-model="ruleForm.region" placeholder="请选择优惠券类型">
-            <el-option label="折扣券" value="shanghai"></el-option>
-            <el-option label="满减券" value="beijing"></el-option>
+          <el-select v-model="ruleForm.couponType" placeholder="请选择优惠券类型">
+            <el-option label="折扣券" value="1"></el-option>
+            <el-option label="满减券" value="2"></el-option>
           </el-select>
         </el-form-item>
+        <el-form-item label="折扣率" prop="rebate" v-if="ruleForm.couponType=='1'">
+          <el-input v-model="ruleForm.rebate"></el-input>
+        </el-form-item>
         <el-form-item label="限定条件" prop="region">
-          <el-select v-model="ruleForm.region" placeholder="请选择领券限定条件">
+          <el-select v-model="ruleForm.condition" placeholder="请选择领券限定条件">
             <el-option label="期间每人领取1张" value="shanghai"></el-option>
             <el-option label="期间每人每天领取1张" value="beijing"></el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="发放数量" prop="number" :rules="[
-                        { required: true, message: '数量不能为空'},
-                        { type: 'number', message: '数量必须为数字值'}
-                      ]">
+                            { required: true, message: '数量不能为空'},
+                            { type: 'number', message: '数量必须为数字值'}
+                          ]">
           <el-input type="number" v-model.number="ruleForm.number" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="领取时间" required>
           <el-form-item prop="date2">
-            <el-date-picker v-model="ruleForm.date2" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择领取时间范围" align="left">
+            <el-date-picker v-model="ruleForm.date1" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择领取时间范围" align="left">
             </el-date-picker>
           </el-form-item>
         </el-form-item>
         <el-form-item label="使用时间" required>
           <el-form-item prop="date1">
-            <el-date-picker v-model="ruleForm.date1" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择使用时间范围" align="left">
+            <el-date-picker v-model="ruleForm.date2" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择使用时间范围" align="left">
             </el-date-picker>
           </el-form-item>
         </el-form-item>
@@ -54,13 +57,12 @@ export default {
     return {
       ruleForm: {
         name: '',
-        region: '',
+        couponType: undefined,
+        rebate: undefined, // 折扣
+        condition: '',
+        number: 0,
         date1: '',
         date2: '',
-        delivery: false,
-        type: [],
-        resource: '',
-        number: 0,
         desc: ''
       },
       rules: {
