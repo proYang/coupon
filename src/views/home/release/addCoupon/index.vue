@@ -4,43 +4,25 @@
     <div class="coupon-form">
       <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
         <el-form-item label="优惠券名称" prop="name">
-          <el-input v-model="ruleForm.name"></el-input>
+          <el-input v-model="ruleForm.name" placeholder="填写优惠券名称"></el-input>
         </el-form-item>
-        <el-form-item label="优惠券类型" prop="region">
+        <el-form-item label="优惠券类型" prop="couponType">
           <el-select v-model="ruleForm.couponType" placeholder="请选择优惠券类型">
-            <el-option label="折扣券" value="1"></el-option>
-            <el-option label="满减券" value="2"></el-option>
+            <el-option label="满减券" value="1"></el-option>
+            <el-option label="折扣券" value="2"></el-option>
           </el-select>
         </el-form-item>
-        <el-form-item label="折扣率" prop="rebate" v-if="ruleForm.couponType=='1'">
-          <el-input v-model="ruleForm.rebate"></el-input>
+        <el-form-item label="折扣率" prop="rebate" v-if="ruleForm.couponType=='2'">
+          <el-input v-model="ruleForm.rebate" placeholder="例如：0.85"></el-input>
         </el-form-item>
-        <el-form-item label="限定条件" prop="region">
-          <el-select v-model="ruleForm.condition" placeholder="请选择领券限定条件">
-            <el-option label="期间每人领取1张" value="shanghai"></el-option>
-            <el-option label="期间每人每天领取1张" value="beijing"></el-option>
-          </el-select>
+        <el-form-item label="满足金额" prop="condition" v-if="ruleForm.couponType=='1'">
+          <el-input v-model="ruleForm.condition" placeholder="单位：元"></el-input>
         </el-form-item>
-        <el-form-item label="发放数量" prop="number" :rules="[
-                            { required: true, message: '数量不能为空'},
-                            { type: 'number', message: '数量必须为数字值'}
-                          ]">
-          <el-input type="number" v-model.number="ruleForm.number" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="领取时间" required>
-          <el-form-item prop="date2">
-            <el-date-picker v-model="ruleForm.date1" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择领取时间范围" align="left">
-            </el-date-picker>
-          </el-form-item>
-        </el-form-item>
-        <el-form-item label="使用时间" required>
-          <el-form-item prop="date1">
-            <el-date-picker v-model="ruleForm.date2" type="daterange" :clearable="pickerOtherOption.clearable" :editable="pickerOtherOption.editable" @change="pickTime" :picker-options="pickerOptions" placeholder="选择使用时间范围" align="left">
-            </el-date-picker>
-          </el-form-item>
+        <el-form-item label="抵扣金额" prop="discount" v-if="ruleForm.couponType=='1'">
+          <el-input v-model="ruleForm.discount" placeholder="单位：元"></el-input>
         </el-form-item>
         <el-form-item label="备注" prop="desc">
-          <el-input type="textarea" v-model="ruleForm.desc"></el-input>
+          <el-input type="textarea" placeholder="填写备注信息" v-model="ruleForm.desc"></el-input>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="submitForm('ruleForm')">立即添加</el-button>
@@ -57,88 +39,82 @@ export default {
     return {
       ruleForm: {
         name: '',
-        couponType: undefined,
-        rebate: undefined, // 折扣
-        condition: '',
-        number: 0,
-        date1: '',
-        date2: '',
+        couponType: undefined, // 1-满减券  2-折扣券
+        rebate: undefined, // 折扣率
+        condition: 0,  // 满足金额
+        discount: 0, // 折扣金额
         desc: ''
       },
       rules: {
         name: [
           { required: true, message: '请输入活动名称', trigger: 'blur' },
-          { min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur' }
+          { min: 3, message: '至少3个字符', trigger: 'blur' }
         ],
-        region: [
-          { required: true, message: '请选择活动区域', trigger: 'change' }
+        couponType: [
+          { required: true, message: '请选择优惠券类型', trigger: 'change' }
         ],
-        date1: [
-          { type: 'date', required: true, message: '请选择日期', trigger: 'change' }
+        rebate: [
+          { required: true, message: '请输入折扣率', trigger: 'blur' }
         ],
-        date2: [
-          { type: 'date', required: true, message: '请选择时间', trigger: 'change' }
+        condition: [
+          { required: true, message: '请输入满足金额', trigger: 'blur' }
         ],
-        type: [
-          { type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change' }
-        ],
-        resource: [
-          { required: true, message: '请选择活动资源', trigger: 'change' }
+        discount: [
+          { required: true, message: '请输入折扣金额', trigger: 'blur' }
         ],
         desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
+          { required: false, message: '请填写活动形式', trigger: 'blur' }
         ]
-      },
-      pickerOtherOption: {
-        editable: false,
-        clearable: false
-      },
-      pickerOptions: {
-        shortcuts: [{
-          text: '最近一周',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 7)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '最近一个月',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 30)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '最近三个月',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 90)
-            picker.$emit('pick', [start, end])
-          }
-        }, {
-          text: '最近一年',
-          onClick(picker) {
-            const end = new Date()
-            const start = new Date()
-            start.setTime(start.getTime() - 3600 * 1000 * 24 * 365)
-            picker.$emit('pick', [start, end])
-          }
-        }],
-        disabledDate(time) {
-          return time.getTime() > Date.now()
-        }
-      },
-      times: [new Date().getTime() - 3600 * 1000 * 24 * 500, new Date()]
+      }
     }
   },
   methods: {
     submitForm(formName) {
+      let that = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          that.ruleForm.rebate = parseFloat(that.ruleForm.rebate)
+          that.ruleForm.condition = parseFloat(that.ruleForm.condition)
+          that.ruleForm.discount = parseFloat(that.ruleForm.discount)
+          if (that.ruleForm.couponType == 2) {
+            if (that.ruleForm.rebate > 1 || that.ruleForm.rebate < 0 || isNaN(that.ruleForm.rebate)) {
+              that.$alert('输入的折扣率有误', '提示', {
+                confirmButtonText: '我知道了'
+              })
+              return
+            }
+          } else if (that.ruleForm.couponType == 1) {
+            if (that.ruleForm.condition < 0 || that.ruleForm.discount < 0 || that.ruleForm.condition < that.ruleForm.discount || isNaN(that.ruleForm.discount) || isNaN(that.ruleForm.condition)) {
+              that.$alert('输入的折扣金额或满足金额有误', '提示', {
+                confirmButtonText: '我知道了'
+              })
+              return
+            }
+          }
+          let params = {
+            type_id: that.ruleForm.couponType,
+            display_name: that.ruleForm.name
+          }
+          if (that.ruleForm.couponType == 2) {
+            // 折扣券
+            params.discount = that.ruleForm.rebate
+          } else {
+            // 满减券
+            params.discount = that.ruleForm.discount
+            params.condition = that.ruleForm.condition
+          }
+          that.$api.addCoupon(params).then(function (res) {
+            if (res.error) {
+              that.$alert(res.error, '提示', {
+                confirmButtonText: '我知道了'
+              })
+            } else {
+              that.$alert('添加优惠券成功，快去投放吧', '提示', {
+                confirmButtonText: '我知道了'
+              })
+              that.$refs[formName].resetFields()
+            }
+          })
         } else {
           console.log('error submit!!')
           return false

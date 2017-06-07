@@ -112,7 +112,7 @@ export default {
           return time.getTime() > Date.now()
         }
       },
-      times: [new Date().getTime() - 3600 * 1000 * 24 * 500, new Date()]
+      times: [1483200000000, new Date()]
     }
   },
   methods: {
@@ -178,7 +178,7 @@ export default {
   margin-top: 20px;
   float: left;
   width: 100%;
-  height: 100%;
+  height: 450px;
 }
 
 .crumbs {
@@ -199,7 +199,7 @@ export default {
 .echarts-container {
   position: absolute;
   width: 85%;
-  height: 100%;
+  height: 450px;
   left: 35px;
   top: 100px;
 }
