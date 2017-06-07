@@ -96,7 +96,7 @@ export default {
           return time.getTime() > Date.now()
         }
       },
-      times: [new Date().getTime() - 3600 * 1000 * 24 * 500, new Date()],
+      times: [1483200000000, new Date()],
       tableData: []
     }
   },
@@ -145,11 +145,6 @@ export default {
       if (params.prop !== null) {
         this.params.order_column = params.prop
       }
-      this.loadingInstance = Loading.service({
-        target: '#J_table-container',
-        body: 'loading',
-        text: '数据获取中'
-      })
       // 重新获取数据
       this.fetchData()
     },
@@ -166,11 +161,6 @@ export default {
     },
     changePage(currentPage) {
       this.params.page = currentPage
-      this.loadingInstance = Loading.service({
-        target: '#J_table-container',
-        body: 'loading',
-        text: '数据获取中'
-      })
       // 重新获取数据
       this.fetchData()
     }

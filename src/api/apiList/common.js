@@ -90,7 +90,7 @@ export const couponNumByUseful = (body) => {
 
 // 优惠券推荐
 export const getCouponList = (body) => {
-  return api.post('/jinghuitou/public/index.php/shop/couponStatus', body)
+  return api.post('/jinghuitou/public/index.php/shop/couponForecast', body)
 }
 
 // 总体分析
@@ -111,4 +111,24 @@ export const getSaleStatus = (body) => {
 // 新用户销售情况
 export const getSaleStatusByBuyer = (body) => {
   return api.post('/jinghuitou/public/index.php/shop/saleStatusByBuyer', body)
+}
+
+// 添加优惠券
+export const addCoupon = (body) => {
+  return api.post('/jinghuitou/public/index.php/discount-coupon/add', body)
+}
+
+// 优惠券列表
+export const getAllCoupon = (body) => {
+  return api.post('/jinghuitou/public/index.php/discount-coupon', body)
+}
+
+// 优惠券投放
+export const distributeCoupon = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/distribute', body)
+}
+
+// 优惠券投放记录
+export const distributeRecords = (body) => {
+  return api.post('/jinghuitou/public/index.php/shop/distributeRecords', body)
 }

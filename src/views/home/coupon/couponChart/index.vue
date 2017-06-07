@@ -159,7 +159,7 @@ export default {
           return time.getTime() > Date.now()
         }
       },
-      times: [new Date().getTime() - 3600 * 1000 * 24 * 500, new Date()]
+      times: [1483200000000, new Date()]
     }
   },
   methods: {

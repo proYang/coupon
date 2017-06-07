@@ -142,7 +142,7 @@ export default {
           return time.getTime() > Date.now()
         }
       },
-      times: [new Date().getTime() - 3600 * 1000 * 24 * 500, new Date()]
+      times: [1483200000000, new Date()]
     }
   },
   methods: {
@@ -187,6 +187,10 @@ export default {
     clearOldData() {
     },
     splitData(rawData) {
+      this.line.xAxis.data = []
+      this.line.series[0].data = []
+      this.line.series[1].data = []
+      this.line.series[2].data = []
       for (let i = 0; i < rawData.length; i++) {
         this.line.xAxis.data.push(rawData[i].date)
         this.line.series[0].data.push(rawData[i].newNum)
@@ -225,7 +229,7 @@ export default {
   margin-top: 20px;
   float: left;
   width: 100%;
-  height: 100%;
+  height: 450px;
 }
 
 .crumbs {
@@ -246,7 +250,7 @@ export default {
 .echarts-container {
   position: absolute;
   width: 85%;
-  height: 100%;
+  height: 450px;
   left: 35px;
   top: 100px;
 }
