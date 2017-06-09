@@ -85,7 +85,9 @@ export default {
       that.$api.getAllCoupon(params).then(function (res) {
         that.Form.couponOptions = []
         res.data.forEach(function (item) {
-          that.couponHistory.push({ value: item.id, label: item.display_name })
+          if (!that.couponHistory.some(function (coupon) { return coupon.value == item.id })) {
+            that.couponHistory.push({ value: item.id, label: item.display_name })
+          }
           that.Form.couponOptions.push({ value: item.id, label: item.display_name })
         })
       })

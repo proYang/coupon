@@ -20,7 +20,7 @@
           <span>数据接入</span>
         </template>
         <el-menu-item index="uploadFile">文件上传</el-menu-item>
-        <el-menu-item index="uploadSql">数据库对接</el-menu-item>
+        <!--<el-menu-item index="uploadSql">数据库对接</el-menu-item>-->
       </el-submenu>
       <el-submenu index="3">
         <template slot="title">
