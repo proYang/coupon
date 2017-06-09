@@ -173,7 +173,8 @@ export default {
 }
 
 .index-content-one {
-  background: url('~assets/img/background.jpg') center center / auto 980px no-repeat #fff;
+  background-color: #010b0d;
+  background: url('~assets/img/background.jpg') center center / auto 980px no-repeat;
 }
 
 .option-info {
