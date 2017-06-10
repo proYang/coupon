@@ -32,7 +32,7 @@
         </el-table-column>
         <el-table-column fixed="right" label="操作" width="130">
           <template scope="scope">
-            <el-button type="primary" @click="toThrowCoupon" size="small">再次投放</el-button>
+            <el-button type="primary" @click="toThrowCoupon(scope.$index)" size="small">再次投放</el-button>
           </template>
         </el-table-column>
       </el-table>
@@ -101,7 +101,10 @@ export default {
     }
   },
   methods: {
-    toThrowCoupon() {
+    toThrowCoupon(index) {
+      let item = this.tableData[index]
+      let data = [{ name: item.display_name, num: 0 }]
+      this.$store.dispatch('setCouponInfo', data)
       this.$router.push({ path: '/throwCoupon' })
     },
     formatter(row, column) {

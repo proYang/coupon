@@ -11,6 +11,11 @@ import * as types from './mutationTypes'
 // 设置用户信息
 export const getUserInfo = ({ commit, state }, payload) => {
   Vue.api.getUserInfo().then((res) => {
-    commit(types.SET_USER_INFO, {data: res.data})
+    commit(types.SET_USER_INFO, { data: res.data })
   })
+}
+
+// 设置优惠券信息
+export const setCouponInfo = ({ commit, state }, payload) => {
+  commit(types.SET_SHOP_INFO, payload)
 }

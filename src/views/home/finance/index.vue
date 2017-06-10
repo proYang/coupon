@@ -92,10 +92,12 @@ export default {
     let that = this
     this.getShopId()
     this.getTotalInfo().then(function () {
-      that.totalPutAnimate()
-      that.totalGetAnimate()
-      that.todayPutAnimate()
-      that.todayGetAnimate()
+      setTimeout(function () {
+        that.totalPutAnimate()
+        that.totalGetAnimate()
+        that.todayPutAnimate()
+        that.todayGetAnimate()
+      }, 0)
     })
   }
 }

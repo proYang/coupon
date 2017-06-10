@@ -3,15 +3,15 @@
     <h1 class="title">智能投放（直接投放到相关用户手中）</h1>
     <el-form :inline="true" :model="numberValidateForm" ref="numberValidateForm" label-width="100px" class="demo-ruleForm">
       <el-form-item inline label="投放数量" prop="num" :rules="[
-                                { required: true, message: '投放数量不能为空'},
-                                { type: 'number', message: '投放数量必须为数字值'}
-                              ]">
+                                                                      { required: true, message: '投放数量不能为空'},
+                                                                      { type: 'number', message: '投放数量必须为数字值'}
+                                                                    ]">
         <el-input class="input" type="num" placeholder="单位（张）" v-model.number="numberValidateForm.num" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item label="投放金额" prop="money" :rules="[
-                              { required: true, message: '投放金额不能为空'},
-                              { type: 'number', message: '投放金额必须为数字值'}
-                              ]">
+                                                                    { required: true, message: '投放金额不能为空'},
+                                                                    { type: 'number', message: '投放金额必须为数字值'}
+                                                                    ]">
         <el-input class="input" type="money" placeholder="单位（元）" v-model.number="numberValidateForm.money" auto-complete="off"></el-input>
       </el-form-item>
       <el-form-item>
@@ -19,7 +19,7 @@
         <el-button @click="resetForm('numberValidateForm')">重置</el-button>
       </el-form-item>
     </el-form>
-    <el-table :data="planData" style="width: 100%">
+    <el-table :data="planData" style="width: 100%" v-if="showTable">
       <el-table-column type="expand">
         <template scope="props">
           <el-form label-position="left" inline class="demo-table-expand">
@@ -52,7 +52,7 @@
       </el-table-column>
       <el-table-column label="操作">
         <template scope="scope">
-          <el-button type="primary" size="small" @click='toThrowCoupon'>使用方案</el-button>
+          <el-button type="primary" size="small" @click='toThrowCoupon(scope.$index)'>使用方案</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -63,6 +63,7 @@
 export default {
   data() {
     return {
+      showTable: false,
       numberValidateForm: {
         num: '',
         money: ''
@@ -160,7 +161,9 @@ export default {
     }
   },
   methods: {
-    toThrowCoupon() {
+    toThrowCoupon(index) {
+      let data = this.planData[index].coupons
+      this.$store.dispatch('setCouponInfo', data)
       this.$router.push({ path: '/throwCoupon' })
     },
     submitForm(formName) {
@@ -169,9 +172,21 @@ export default {
         if (valid) {
           that.planData.forEach(function (item) {
             item.totalNum = that.numberValidateForm.num
+            let total = item.totalNum
+            item.coupons.forEach(function (coupon, index) {
+              if ((item.coupons.length - 1) == index) {
+                coupon.num = total
+              } else {
+                let one = Math.ceil(Math.random() * total)
+                let two = total - one
+                total = Math.max(two, one)
+                coupon.num = Math.min(two, one)
+              }
+            })
             item.reciveNum = Math.floor(item.totalNum * item.reciveRate)
             item.useNum = Math.floor(item.totalNum * item.reciveRate * item.useRate)
           })
+          that.showTable = true
         } else {
           console.log('error submit!!')
           return false

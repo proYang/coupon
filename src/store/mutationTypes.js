@@ -5,3 +5,7 @@
 
 // 设置商户资料
 export const SET_SHOP_INFO = 'SET_SHOP_INFO'
+
+// 设置优惠券参数
+export const SET_COUPON_INFO = 'SET_COUPON_INFO'
+

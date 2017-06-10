@@ -16,5 +16,8 @@ export default {
       payload.data.user_sex = '未知'
     }
     state.userInfo = payload.data
+  },
+  [types.SET_SHOP_INFO](state, payload) {
+    state.couponInfo.coupons = payload
   }
 }

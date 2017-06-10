@@ -6,7 +6,7 @@
         <span style="font-weight:700">{{buyerNum}}人</span>
       </span>
     </div>
-    <div class="table-item" v-for="item in stamps">
+    <div class="table-item" v-for="(item,index) in stamps">
       <div class="stamp stamp01" v-if="item.type.value == 1">
         <div class="par">
           <p>沁园重邮店</p>
@@ -36,7 +36,7 @@
       </div>
       <p class="info">预测有
         <span>{{item.num}}</span>人使用此类优惠券</p>
-      <el-button @click='push' type="primary">投放</el-button>
+      <el-button @click='push(index)' type="primary">投放</el-button>
     </div>
     <div class="block">
       <el-pagination layout="prev, pager, next" :page-count='totalPage' :page-size='params.size' :current-page='params.page' @current-change='changePage'>
@@ -65,7 +65,17 @@ export default {
     this.getCouponList()
   },
   methods: {
-    push() {
+    push(index) {
+      let item = this.stamps[index]
+      let data
+      if (item.type.value == 1) {
+        // 满减券
+        data = [{ name: '满' + parseInt(item.originalPrice) + '减' + parseInt(item.sellingPrice) + '券', num: 0 }]
+      } else {
+        // 折扣券
+        data = [{ name: (item.rebate * 10).toFixed(1) + item.type.display, num: 0 }]
+      }
+      this.$store.dispatch('setCouponInfo', data)
       this.$router.push({ path: '/throwCoupon' })
     },
     getCouponList() {

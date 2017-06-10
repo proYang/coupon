@@ -7,7 +7,7 @@
       </el-breadcrumb>
     </div>
     <div class="form-box">
-      <el-form ref="form" :model="form" label-width="80px">
+      <el-form ref="form" :model="form" label-width="120px">
         <el-form-item label="邮箱">
           <span>{{form.email}}</span>
         </el-form-item>
@@ -31,6 +31,9 @@
             <el-option v-for="item in classification" :key="item.id" :label="item.name" :value="item.id">
             </el-option>
           </el-select>
+        </el-form-item>
+        <el-form-item label="淘宝AppKey">
+          <el-input type="" placeholder="请输入淘宝开发者AppKey"></el-input>
         </el-form-item>
         <el-form-item label="商户地址">
           <el-select v-model="provinceCode" @change="getRegionAsync('city')" placeholder="请选择所在省">

@@ -102,6 +102,7 @@ export default {
       let newCoupons = []
       // 拼接参数
       coupons.forEach(function (item) {
+        if (!item.value) return
         newCoupons.push({
           coupon_id: item.value,
           num: item.num,
@@ -135,6 +136,13 @@ export default {
   mounted() {
     var that = this
     this.searchList('')
+    let coupons = this.$store.getters.couponInfo.coupons
+    coupons.forEach((item) => {
+      this.selected.push({ num: item.num, label: item.name })
+    })
+  },
+  destroyed() {
+    this.$store.dispatch('setCouponInfo', [])
   }
 }
 </script>
